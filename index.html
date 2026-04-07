@@ -976,110 +976,190 @@
   <div class="container">
     <div class="reveal">
       <div class="section-label">Screenshot & Anteprime</div>
-      <h2 class="section-title">Vedi l'app<br><span>in azione</span></h2>
-      <p class="section-desc">Scorri le anteprime dei principali moduli di Sport Monitoring.</p>
+      <h2 class="section-title">Ogni modulo,<br><span>nel dettaglio</span></h2>
+      <p class="section-desc">Esplora tutti i fogli dell'app con anteprime reali e descrizioni delle funzionalità.</p>
     </div>
-    <div class="gallery-grid">
+    <div class="gallery-grid" style="grid-template-columns:repeat(3,1fr);">
 
-      <!-- Card 1 -->
+      <!-- Home -->
       <div class="gallery-card reveal">
         <div class="gallery-img-wrap" onclick="openLightbox(this)">
           <img src="screenshots/home.png" alt="Home Riepilogo"
                onerror="this.src='screenshots/Home.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
-          <div class="gallery-placeholder" style="display:none;">
-            <span class="gallery-placeholder-icon">🏠</span>
-            <span class="gallery-placeholder-text">Home Riepilogo</span>
-          </div>
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🏠</span><span class="gallery-placeholder-text">Home</span></div>
           <span class="gallery-badge">Home</span>
         </div>
         <div class="gallery-body">
           <div class="gallery-title">Home Riepilogo</div>
-          <div class="gallery-caption">Dashboard principale con statistiche stagionali, prossima sessione, top performer e azioni rapide.</div>
+          <div class="gallery-caption">Dashboard principale con statistiche stagionali, atleti in rosa, prossima sessione, top performer mensile e azioni rapide.</div>
         </div>
       </div>
 
-      <!-- Card 2 -->
+      <!-- Formazione -->
       <div class="gallery-card reveal delay-1">
         <div class="gallery-img-wrap" onclick="openLightbox(this)">
-          <img src="screenshots/squadra.png" alt="Gestione Squadra"
-               onerror="this.src='screenshots/Squadra.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
-          <div class="gallery-placeholder" style="display:none;">
-            <span class="gallery-placeholder-icon">👥</span>
-            <span class="gallery-placeholder-text">Gestione Squadra</span>
-          </div>
-          <span class="gallery-badge">Squadra</span>
+          <img src="screenshots/formazione.png" alt="Formazione Tattica"
+               onerror="this.src='screenshots/Formazione.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">⚽</span><span class="gallery-placeholder-text">Formazione</span></div>
+          <span class="gallery-badge">Formazione</span>
         </div>
         <div class="gallery-body">
-          <div class="gallery-title">Gestione Squadra</div>
-          <div class="gallery-caption">Anagrafica completa di atleti e staff con foto, ruolo, numero maglia e scadenze mediche.</div>
+          <div class="gallery-title">Formazione Tattica</div>
+          <div class="gallery-caption">Campo interattivo per la disposizione tattica degli atleti. Trascina i giocatori, scegli il modulo e salva la formazione.</div>
         </div>
       </div>
 
-      <!-- Card 3 -->
+      <!-- Calendario -->
       <div class="gallery-card reveal delay-2">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
-          <img src="screenshots/materiale.png" alt="Gestione Materiale"
-               onerror="this.src='screenshots/Materiale.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
-          <div class="gallery-placeholder" style="display:none;">
-            <span class="gallery-placeholder-icon">📦</span>
-            <span class="gallery-placeholder-text">Gestione Materiale</span>
-          </div>
-          <span class="gallery-badge">Materiale</span>
-        </div>
-        <div class="gallery-body">
-          <div class="gallery-title">Gestione Materiale</div>
-          <div class="gallery-caption">Traccia consegne, restituzioni, taglie e quantità di divise e attrezzatura per ogni atleta.</div>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="gallery-card reveal">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
-          <img src="screenshots/gps.png" alt="GPS Performance"
-               onerror="this.src='screenshots/GPS.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
-          <div class="gallery-placeholder" style="display:none;">
-            <span class="gallery-placeholder-icon">📊</span>
-            <span class="gallery-placeholder-text">GPS & Performance</span>
-          </div>
-          <span class="gallery-badge">GPS</span>
-        </div>
-        <div class="gallery-body">
-          <div class="gallery-title">GPS & Performance</div>
-          <div class="gallery-caption">Grafici di confronto e analisi dati GPS: distanza, velocità, sprint e accelerazioni per atleta.</div>
-        </div>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="gallery-card reveal delay-1">
         <div class="gallery-img-wrap" onclick="openLightbox(this)">
           <img src="screenshots/calendario.png" alt="Calendario"
                onerror="this.src='screenshots/Calendario.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
-          <div class="gallery-placeholder" style="display:none;">
-            <span class="gallery-placeholder-icon">📅</span>
-            <span class="gallery-placeholder-text">Calendario</span>
-          </div>
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📅</span><span class="gallery-placeholder-text">Calendario</span></div>
           <span class="gallery-badge">Calendario</span>
         </div>
         <div class="gallery-body">
           <div class="gallery-title">Calendario Attività</div>
-          <div class="gallery-caption">Pianifica allenamenti e partite. Gli atleti ricevono il calendario direttamente sul loro smartphone.</div>
+          <div class="gallery-caption">Visualizza e pianifica allenamenti e partite. Naviga per mese con tutti gli eventi della stagione.</div>
         </div>
       </div>
 
-      <!-- Card 6 -->
+      <!-- Squadra -->
+      <div class="gallery-card reveal">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/squadra.png" alt="Gestione Squadra"
+               onerror="this.src='screenshots/Squadra.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">👥</span><span class="gallery-placeholder-text">Squadra</span></div>
+          <span class="gallery-badge">Squadra</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Gestione Squadra</div>
+          <div class="gallery-caption">Anagrafica completa di atleti e staff: foto profilo, ruolo, numero maglia, scadenze visite mediche e tessere.</div>
+        </div>
+      </div>
+
+      <!-- Risultati -->
+      <div class="gallery-card reveal delay-1">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/risultati.png" alt="Risultati Partite"
+               onerror="this.src='screenshots/Risultati.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🏆</span><span class="gallery-placeholder-text">Risultati</span></div>
+          <span class="gallery-badge">Risultati</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Risultati Partite</div>
+          <div class="gallery-caption">Archivio completo delle partite con risultati, marcatori, assist e cartellini. Statistiche stagionali aggiornate in tempo reale.</div>
+        </div>
+      </div>
+
+      <!-- Valutazioni -->
       <div class="gallery-card reveal delay-2">
         <div class="gallery-img-wrap" onclick="openLightbox(this)">
           <img src="screenshots/valutazioni.png" alt="Valutazioni"
                onerror="this.src='screenshots/Valutazioni.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
-          <div class="gallery-placeholder" style="display:none;">
-            <span class="gallery-placeholder-icon">📋</span>
-            <span class="gallery-placeholder-text">Valutazioni</span>
-          </div>
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📋</span><span class="gallery-placeholder-text">Valutazioni</span></div>
           <span class="gallery-badge">Valutazioni</span>
         </div>
         <div class="gallery-body">
-          <div class="gallery-title">Valutazioni & Presenze</div>
-          <div class="gallery-caption">Sistema di pagelle per ogni sessione con report grafici di andamento nel tempo.</div>
+          <div class="gallery-title">Valutazioni Atleti</div>
+          <div class="gallery-caption">Sistema di pagelle per ogni sessione: presenza, serietà, abbigliamento. Report grafici di andamento nel tempo.</div>
+        </div>
+      </div>
+
+      <!-- Presenze -->
+      <div class="gallery-card reveal">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/presenze.png" alt="Report Presenze"
+               onerror="this.src='screenshots/Presenze.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">✅</span><span class="gallery-placeholder-text">Presenze</span></div>
+          <span class="gallery-badge">Presenze</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Report Presenze</div>
+          <div class="gallery-caption">Tracciamento completo delle presenze per atleta e per sessione. Grafici di percentuale e trend mensile.</div>
+        </div>
+      </div>
+
+      <!-- Hall of Fame -->
+      <div class="gallery-card reveal delay-1">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/halloffame.png" alt="Hall of Fame"
+               onerror="this.src='screenshots/HallofFame.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🌟</span><span class="gallery-placeholder-text">Hall of Fame</span></div>
+          <span class="gallery-badge">Hall of Fame</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Hall of Fame</div>
+          <div class="gallery-caption">Classifica dei migliori atleti della stagione basata sulle valutazioni. Premi speciali e riconoscimenti assegnati dal coach.</div>
+        </div>
+      </div>
+
+      <!-- GPS -->
+      <div class="gallery-card reveal delay-2">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/gps.png" alt="GPS Performance"
+               onerror="this.src='screenshots/GPS.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📊</span><span class="gallery-placeholder-text">GPS</span></div>
+          <span class="gallery-badge">GPS</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">GPS & Performance</div>
+          <div class="gallery-caption">Grafici di confronto dati GPS tra atleti e sessioni: distanza, velocità massima, sprint, accelerazioni e statistiche di partita.</div>
+        </div>
+      </div>
+
+      <!-- Analisi -->
+      <div class="gallery-card reveal">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/analisi.png" alt="Analisi Atleta"
+               onerror="this.src='screenshots/Analisi.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🔍</span><span class="gallery-placeholder-text">Analisi</span></div>
+          <span class="gallery-badge">Analisi</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Analisi Atleta Singolo</div>
+          <div class="gallery-caption">Scheda individuale approfondita con tutti i dati GPS, valutazioni e presenze di ogni atleta nel tempo.</div>
+        </div>
+      </div>
+
+      <!-- Cal. Presenze -->
+      <div class="gallery-card reveal delay-1">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/cal-presenze.png" alt="Calendario Presenze"
+               onerror="this.src='screenshots/CalPresenze.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📆</span><span class="gallery-placeholder-text">Cal. Presenze</span></div>
+          <span class="gallery-badge">Cal. ↗</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Calendario Personale Atleta</div>
+          <div class="gallery-caption">Gli atleti ricevono un link personale per segnare presenza o assenza a ogni evento. Aggiornamento in tempo reale.</div>
+        </div>
+      </div>
+
+      <!-- Materiale -->
+      <div class="gallery-card reveal delay-2">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/materiale.png" alt="Gestione Materiale"
+               onerror="this.src='screenshots/Materiale.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📦</span><span class="gallery-placeholder-text">Materiale</span></div>
+          <span class="gallery-badge">Materiale</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Gestione Materiale</div>
+          <div class="gallery-caption">Traccia consegne, restituzioni, taglie e quantità di divise e attrezzatura. Esporta in Excel con un clic.</div>
+        </div>
+      </div>
+
+      <!-- Accessi -->
+      <div class="gallery-card reveal">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/accessi.png" alt="Log Accessi"
+               onerror="this.src='screenshots/Accessi.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🔐</span><span class="gallery-placeholder-text">Accessi</span></div>
+          <span class="gallery-badge">Accessi</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Log Accessi Utenti</div>
+          <div class="gallery-caption">Storico completo di tutti gli accessi con data, ora, utente e ruolo. Filtrabile per utente. Visibile solo all'admin.</div>
         </div>
       </div>
 
