@@ -773,29 +773,29 @@
 </div>
 
 
-<!-- BANNER PARTNER -->
+<!-- BANNER PARTNER ═══════════════════════════════════════════
+  COME USARE IL BANNER:
+  1. Sostituisci href="https://www.tuosito.it" con il link del sito da pubblicizzare
+  2. Cambia l'emoji 🌐 con quella più adatta (es. 🛒 🏋️ ⚽ 🎯)
+  3. Cambia "Nome Sito" con il nome del sito
+  4. Cambia "Breve descrizione" con una frase breve sul sito
+  5. Per aggiungere un secondo banner, copia il blocco <a class="banner-slot">
+  6. Per nascondere il banner, aggiungi style="display:none" al div sotto
+═══════════════════════════════════════════════════════════ -->
 <div class="banner-partner">
   <div class="banner-partner-inner">
     <span class="banner-partner-label">Partner &amp; Sponsor</span>
     <div class="banner-partner-content">
 
-      <!-- Slot 1: Inserisci qui il link del partner -->
-      <a href="https://www.tuosito.it" target="_blank" rel="noopener" class="banner-slot">
+      <!-- ▼ MODIFICA QUI: cambia href, emoji, nome e descrizione ▼ -->
+      <a href="https://mondo-sport.vercel.app/" target="_blank" rel="noopener" class="banner-slot">
         <div class="banner-slot-logo">🌐</div>
         <div class="banner-slot-text">
-          <span class="banner-slot-name">Nome Sito</span>
-          <span class="banner-slot-desc">Breve descrizione del partner</span>
+          <span class="banner-slot-name">mondo sport</span>
+          <span class="banner-slot-desc">Cerca nel modo dello sport</span>
         </div>
       </a>
-
-      <!-- Slot 2: Secondo partner (opzionale) -->
-      <a href="#" class="banner-slot banner-slot-empty" title="Slot disponibile">
-        <div class="banner-slot-logo" style="background:rgba(255,255,255,0.05);">➕</div>
-        <div class="banner-slot-text">
-          <span class="banner-slot-name" style="color:var(--muted);">Slot disponibile</span>
-          <span class="banner-slot-desc">Contattaci per inserire il tuo sito</span>
-        </div>
-      </a>
+      <!-- ▲ FINE MODIFICA ▲ -->
 
     </div>
   </div>
@@ -861,23 +861,12 @@
 </section>
 
 <!-- ROLES -->
-<section class="roles" id="utenti">
+<section class="roles" id="utenti" style="padding:80px 0;">
   <div class="container">
     <div class="reveal">
       <div class="section-label">Profili Utente</div>
       <h2 class="section-title">Il giusto accesso<br><span>per ogni ruolo</span></h2>
-      <p class="section-desc">9 profili configurabili con permessi granulari. Ogni utente vede e modifica solo ciò che gli compete.</p>
-    </div>
-    <div class="roles-grid">
-      <div class="role-card reveal"><div class="role-icon">👑</div><div class="role-name">Admin</div></div>
-      <div class="role-card reveal delay-1"><div class="role-icon">🥇</div><div class="role-name">Coach L1</div></div>
-      <div class="role-card reveal delay-2"><div class="role-icon">🥈</div><div class="role-name">Coach L2</div></div>
-      <div class="role-card reveal"><div class="role-icon">🥉</div><div class="role-name">Coach L3</div></div>
-      <div class="role-card reveal delay-1"><div class="role-icon">🏅</div><div class="role-name">Dirigente L1</div></div>
-      <div class="role-card reveal delay-2"><div class="role-icon">📂</div><div class="role-name">Dirigente L2</div></div>
-      <div class="role-card reveal"><div class="role-icon">📋</div><div class="role-name">Dirigente L3</div></div>
-      <div class="role-card reveal delay-1"><div class="role-icon">🗂️</div><div class="role-name">Dirigente L4</div></div>
-      <div class="role-card reveal delay-2"><div class="role-icon">👁️</div><div class="role-name">Read-only</div></div>
+      <p class="section-desc">9 profili configurabili con permessi granulari: Admin, Coach L1/L2/L3, Dirigente L1/L2/L3/L4 e Read-only. Ogni utente vede e modifica solo ciò che gli compete.</p>
     </div>
   </div>
 </section>
