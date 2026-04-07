@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sport Monitoring — Piattaforma Professionale per la Gestione Sportiva</title>
+<meta name="description" content="Sport Monitoring è la piattaforma cloud professionale per la gestione di squadre sportive. Atleti, GPS, valutazioni, materiale, calendario e molto altro. Prova la demo.">
+<meta name="keywords" content="gestione squadra sportiva, software allenatore, dashboard sport, gestione atleti, dati GPS sport, piattaforma sportiva, coach software, sport management">
+<meta name="author" content="Edy Franzoso">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sport-monitoring.vercel.app/">
+
+<!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sport-monitoring.vercel.app/">
+<meta property="og:title" content="Sport Monitoring — Gestione Sportiva Professionale">
+<meta property="og:description" content="La piattaforma cloud completa per allenatori e dirigenti. Atleti, GPS, valutazioni, materiale e calendario in un unico sistema.">
+<meta property="og:image" content="https://sport-monitoring.vercel.app/og-image.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Sport Monitoring">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sport Monitoring — Gestione Sportiva Professionale">
+<meta name="twitter:description" content="La piattaforma cloud completa per allenatori e dirigenti sportivi.">
+<meta name="twitter:image" content="https://sport-monitoring.vercel.app/og-image.png">
+
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Sport Monitoring",
+  "description": "Piattaforma professionale cloud per la gestione di squadre sportive: atleti, GPS, valutazioni, materiale, calendario presenze.",
+  "applicationCategory": "SportsApplication",
+  "operatingSystem": "Web Browser",
+  "url": "https://sport-monitoring.vercel.app/",
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "seller": { "@type": "Person", "name": "Edy Franzoso" }
+  },
+  "author": { "@type": "Person", "name": "Edy Franzoso" },
+  "inLanguage": "it"
+}
+
+  // Lightbox
+  function openLightbox(wrap) {
+    var img = wrap.querySelector('img');
+    if (!img || img.style.display === 'none') return; // no image loaded
+    var lb = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+    var lbCap = document.getElementById('lightbox-caption');
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    var card = wrap.closest('.gallery-card');
+    lbCap.textContent = card ? card.querySelector('.gallery-title').textContent : '';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #050a12;
+    --bg2:       #0a1628;
+    --bg3:       #0f2040;
+    --accent:    #00d4ff;
+    --accent2:   #00ff88;
+    --gold:      #f5c842;
+    --text:      #e8f0fe;
+    --muted:     #7a99bb;
+    --card:      rgba(10,22,40,0.85);
+    --border:    rgba(0,212,255,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ─────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: .4;
+  }
+
+  /* ── NAV ─────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 6%;
+    background: rgba(5,10,18,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.6rem; font-weight: 900; letter-spacing: 2px;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--muted);
+    text-decoration: none; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent); color: var(--bg);
+    padding: 10px 24px; border-radius: 4px;
+    font-size: 0.82rem; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; text-decoration: none;
+    transition: background .2s, transform .15s;
+  }
+  .nav-cta:hover { background: #33ddff; transform: translateY(-1px); }
+
+  /* ── HERO ─────────────────────────────────────── */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 0 6%; overflow: hidden;
+  }
+
+  /* animated grid background */
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridSlide 20s linear infinite;
+  }
+  @keyframes gridSlide { to { background-position: 60px 60px; } }
+
+  /* glowing orbs */
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); opacity: .18; pointer-events: none;
+  }
+  .orb1 { width: 600px; height: 600px; background: var(--accent); top: -100px; right: -100px; animation: pulse 6s ease-in-out infinite; }
+  .orb2 { width: 400px; height: 400px; background: var(--accent2); bottom: -50px; left: 10%; animation: pulse 8s ease-in-out infinite reverse; }
+  @keyframes pulse { 0%,100% { opacity: .14; } 50% { opacity: .22; } }
+
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3);
+    color: var(--accent); padding: 6px 16px; border-radius: 100px;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 2rem;
+    animation: fadeUp .8s ease both;
+  }
+  .hero-badge::before { content: '●'; font-size: .5rem; animation: blink 1.4s infinite; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .2; } }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 900; line-height: .95;
+    text-transform: uppercase; letter-spacing: -1px;
+    animation: fadeUp .8s .1s ease both;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); display: block; }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 300;
+    color: var(--muted); line-height: 1.7; margin: 1.8rem 0 2.5rem;
+    max-width: 520px;
+    animation: fadeUp .8s .2s ease both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp .8s .3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--accent); color: var(--bg);
+    padding: 15px 36px; border-radius: 4px;
+    font-weight: 700; font-size: 0.9rem; letter-spacing: 1.5px;
+    text-transform: uppercase; text-decoration: none;
+    transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: #33ddff; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,212,255,0.3); }
+
+  .btn-outline {
+    border: 1px solid var(--border); color: var(--text);
+    padding: 15px 36px; border-radius: 4px;
+    font-weight: 500; font-size: 0.9rem; letter-spacing: 1.5px;
+    text-transform: uppercase; text-decoration: none;
+    transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+    backdrop-filter: blur(4px);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    position: absolute; right: 6%; bottom: 10%;
+    display: flex; flex-direction: column; gap: 1.5rem; z-index: 1;
+    animation: fadeUp .8s .5s ease both;
+  }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 16px 24px; border-radius: 8px; text-align: right;
+    backdrop-filter: blur(8px);
+  }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2.2rem; font-weight: 900; color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── STRIP ─────────────────────────────────── */
+  .strip {
+    background: var(--accent); padding: 14px 0; overflow: hidden;
+    border-top: none;
+  }
+  .strip-inner {
+    display: flex; gap: 4rem; animation: scrollLeft 20s linear infinite;
+    white-space: nowrap;
+  }
+  .strip-item {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--bg);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .strip-item::before { content: '◆'; font-size: .5rem; }
+  @keyframes scrollLeft { to { transform: translateX(-50%); } }
+
+  /* ── SECTIONS COMMON ──────────────────────── */
+  section { position: relative; z-index: 1; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 6%; }
+
+  .section-label {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900;
+    text-transform: uppercase; line-height: 1; margin-bottom: 1.2rem;
+  }
+  .section-title span { color: var(--accent); }
+  .section-desc {
+    font-size: 1.05rem; color: var(--muted); line-height: 1.7; max-width: 560px;
+  }
+
+  /* ── FEATURES ─────────────────────────────── */
+  .features { padding: 120px 0; }
+
+  .features-header { margin-bottom: 70px; }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .feat-card {
+    background: var(--bg2); padding: 40px 32px;
+    border: 1px solid rgba(255,255,255,0.04);
+    transition: all .3s; position: relative; overflow: hidden;
+  }
+  .feat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .3s;
+  }
+  .feat-card:hover { background: var(--bg3); border-color: var(--border); }
+  .feat-card:hover::before { transform: scaleX(1); }
+
+  .feat-icon {
+    font-size: 2rem; margin-bottom: 1.2rem; display: block;
+    filter: grayscale(.3);
+  }
+  .feat-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.35rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: .7rem;
+  }
+  .feat-desc { font-size: .9rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── ROLES ─────────────────────────────────── */
+  .roles { padding: 100px 0; background: linear-gradient(180deg, transparent, var(--bg2) 20%, var(--bg2) 80%, transparent); }
+
+  .roles-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px; margin-top: 60px;
+  }
+
+  .role-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 24px 20px;
+    transition: all .25s; cursor: default;
+  }
+  .role-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 12px 30px rgba(0,212,255,0.1); }
+
+  .role-icon { font-size: 1.8rem; margin-bottom: 12px; }
+  .role-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--accent); margin-bottom: 8px;
+  }
+  .role-perms { list-style: none; }
+  .role-perms li {
+    font-size: 0.78rem; color: var(--muted); padding: 3px 0;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .role-perms li::before { content: '—'; color: var(--accent); font-size: .7rem; }
+
+  /* ── MODULES ──────────────────────────────── */
+  .modules { padding: 120px 0; }
+
+  .modules-layout {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center; margin-top: 60px;
+  }
+
+  .module-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .module-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px; border-radius: 6px;
+    cursor: default; transition: all .2s;
+    border: 1px solid transparent;
+  }
+  .module-item:hover { background: var(--bg2); border-color: var(--border); }
+  .module-item.active { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.3); }
+
+  .module-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.5rem; font-weight: 900; color: rgba(0,212,255,.3);
+    min-width: 36px;
+  }
+  .module-name {
+    font-weight: 600; font-size: .95rem; letter-spacing: .5px;
+  }
+  .module-tag {
+    margin-left: auto; font-size: .68rem; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 100px;
+  }
+  .tag-new { background: rgba(0,255,136,.15); color: var(--accent2); border: 1px solid rgba(0,255,136,.3); }
+  .tag-pro { background: rgba(245,200,66,.1); color: var(--gold); border: 1px solid rgba(245,200,66,.3); }
+
+  .modules-visual {
+    position: relative; aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .dashboard-mock {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; width: 100%; padding: 20px;
+    box-shadow: 0 40px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(0,212,255,.05);
+  }
+  .mock-header {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+  }
+  .mock-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .mock-title { font-size: .75rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-left: auto; }
+
+  .mock-nav {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .mock-tab {
+    font-size: .62rem; padding: 4px 10px; border-radius: 3px;
+    background: rgba(255,255,255,.04); color: var(--muted); letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .mock-tab.active { background: rgba(0,212,255,.15); color: var(--accent); }
+
+  .mock-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .mock-card {
+    background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.05);
+    border-radius: 6px; padding: 14px;
+  }
+  .mock-card-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.8rem; font-weight: 900; color: var(--accent);
+  }
+  .mock-card-label { font-size: .65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  .mock-bar-row { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+  .mock-bar-label { font-size: .62rem; color: var(--muted); min-width: 60px; }
+  .mock-bar-bg { flex: 1; height: 4px; background: rgba(255,255,255,.06); border-radius: 10px; overflow: hidden; }
+  .mock-bar-fill { height: 100%; border-radius: 10px; background: var(--accent); }
+
+  /* ── TESTIMONIAL ──────────────────────────── */
+  .proof { padding: 100px 0; }
+  .proof-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    margin-top: 60px;
+  }
+  .proof-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 32px 28px;
+    position: relative;
+  }
+  .proof-card::before {
+    content: '"'; font-family: 'Barlow Condensed', sans-serif;
+    font-size: 6rem; font-weight: 900; color: rgba(0,212,255,.08);
+    position: absolute; top: -10px; left: 20px; line-height: 1;
+  }
+  .proof-text { font-size: .9rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+  .proof-author { display: flex; align-items: center; gap: 12px; }
+  .proof-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: .85rem; color: var(--bg);
+  }
+  .proof-name { font-weight: 600; font-size: .85rem; }
+  .proof-role { font-size: .75rem; color: var(--muted); }
+
+  /* ── CONTACT ──────────────────────────────── */
+  .contact {
+    padding: 120px 0;
+    background: linear-gradient(180deg, transparent, var(--bg2));
+  }
+  .contact-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+
+  .contact-info { }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 24px 0; border-bottom: 1px solid var(--border);
+  }
+  .contact-item:last-child { border-bottom: none; }
+  .contact-ico { font-size: 1.4rem; }
+  .contact-item-label { font-size: .72rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+  .contact-item-val {
+    font-size: 1rem; font-weight: 500; color: var(--text);
+    text-decoration: none; transition: color .2s;
+  }
+  .contact-item-val:hover { color: var(--accent); }
+
+  .contact-form {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 40px;
+  }
+  .form-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.6rem; font-weight: 700; text-transform: uppercase;
+    margin-bottom: 24px; letter-spacing: 1px;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-label { font-size: .75rem; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; display: block; }
+  .form-input, .form-textarea {
+    width: 100%; background: rgba(255,255,255,.04);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 12px 16px; color: var(--text); font-family: 'Barlow', sans-serif;
+    font-size: .9rem; transition: border-color .2s;
+  }
+  .form-input:focus, .form-textarea:focus {
+    outline: none; border-color: var(--accent);
+    background: rgba(0,212,255,.04);
+  }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-select {
+    width: 100%; background: rgba(255,255,255,.04);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 12px 16px; color: var(--text); font-family: 'Barlow', sans-serif;
+    font-size: .9rem; transition: border-color .2s; cursor: pointer;
+  }
+  .form-select:focus { outline: none; border-color: var(--accent); }
+  .form-select option { background: var(--bg2); }
+  .form-submit {
+    width: 100%; background: var(--accent); color: var(--bg);
+    border: none; padding: 15px; border-radius: 6px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; cursor: pointer; margin-top: 8px;
+    transition: all .2s;
+  }
+  .form-submit:hover { background: #33ddff; transform: translateY(-1px); }
+  #form-success {
+    display: none; text-align: center; padding: 20px;
+    color: var(--accent2); font-weight: 600;
+  }
+
+  /* ── FOOTER ───────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 6%; text-align: center;
+    font-size: .8rem; color: var(--muted);
+    position: relative; z-index: 1;
+  }
+  footer strong { color: var(--accent); }
+
+  /* ── SCROLL REVEAL ────────────────────────── */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal.delay-1 { transition-delay: .1s; }
+  .reveal.delay-2 { transition-delay: .2s; }
+  .reveal.delay-3 { transition-delay: .3s; }
+  .reveal.delay-4 { transition-delay: .4s; }
+
+  /* ── RESPONSIVE ───────────────────────────── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hero-stats { display: none; }
+    .features-grid { grid-template-columns: 1fr; }
+    .modules-layout { grid-template-columns: 1fr; }
+    .proof-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .roles-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .roles-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── GALLERY ─────────────────────────────── */
+  .gallery { padding: 120px 0; background: linear-gradient(180deg, var(--bg2), var(--bg)); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .gallery-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+    transition: all .3s; cursor: default;
+    display: flex; flex-direction: column;
+  }
+  .gallery-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0,212,255,.4);
+    box-shadow: 0 20px 50px rgba(0,0,0,.5), 0 0 0 1px rgba(0,212,255,.1);
+  }
+
+  .gallery-img-wrap {
+    position: relative; overflow: hidden;
+    aspect-ratio: 16/10; background: var(--bg3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .gallery-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .gallery-card:hover .gallery-img-wrap img { transform: scale(1.04); }
+
+  /* Placeholder quando non c'è ancora l'immagine */
+  .gallery-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; color: var(--muted);
+    background: repeating-linear-gradient(
+      45deg, rgba(255,255,255,.015) 0px, rgba(255,255,255,.015) 1px,
+      transparent 1px, transparent 12px
+    );
+  }
+  .gallery-placeholder-icon { font-size: 2.5rem; opacity: .4; }
+  .gallery-placeholder-text { font-size: .72rem; letter-spacing: 2px; text-transform: uppercase; opacity: .4; }
+
+  .gallery-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: rgba(0,212,255,.15); border: 1px solid rgba(0,212,255,.3);
+    color: var(--accent); padding: 4px 10px; border-radius: 100px;
+    font-size: .65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  }
+
+  .gallery-body { padding: 20px 22px 24px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .gallery-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.15rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+  }
+  .gallery-caption { font-size: .85rem; color: var(--muted); line-height: 1.6; flex: 1; }
+
+  /* Lightbox */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,.92); backdrop-filter: blur(10px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-img {
+    max-width: 90vw; max-height: 85vh; border-radius: 8px;
+    box-shadow: 0 0 80px rgba(0,212,255,.15);
+  }
+  .lightbox-close {
+    position: absolute; top: 20px; right: 24px;
+    font-size: 2rem; color: var(--muted); cursor: pointer;
+    background: none; border: none; transition: color .2s;
+  }
+  .lightbox-close:hover { color: var(--accent); }
+  .lightbox-caption {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    color: var(--muted); font-size: .85rem; letter-spacing: 1px;
+    background: rgba(5,10,18,.8); padding: 8px 20px; border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 900px) {
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 540px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Sport<span>Monitoring</span></div>
+  <div class="nav-links">
+    <a href="#funzionalita">Funzionalità</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#utenti">Utenti</a>
+    <a href="#moduli">Moduli</a>
+    <a href="#contatti">Contatti</a>
+  </div>
+  <a href="https://app-allenamento-r1.vercel.app" target="_blank" rel="noopener" rel="noopener" class="nav-cta">Accedi all'App →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Piattaforma Professionale</div>
+    <h1>Sport<em>Monitoring</em></h1>
+    <p class="hero-sub">
+      La piattaforma completa per la gestione professionale di squadre sportive.
+      Atleti, valutazioni, GPS, materiale, calendari e molto altro — tutto in un unico sistema.
+    </p>
+    <div class="hero-actions">
+      <a href="https://app-allenamento-r1.vercel.app" target="_blank" rel="noopener" rel="noopener" class="btn-primary">
+        <span>Accedi all'App</span> →
+      </a>
+      <a href="#funzionalita" class="btn-outline">
+        <span>Scopri le funzionalità</span>
+      </a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-num">9</div>
+      <div class="stat-label">Ruoli Utente</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">13+</div>
+      <div class="stat-label">Moduli Integrati</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Cloud</div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-inner">
+    <span class="strip-item">Gestione Atleti</span>
+    <span class="strip-item">Dati GPS</span>
+    <span class="strip-item">Calendario Presenze</span>
+    <span class="strip-item">Gestione Materiale</span>
+    <span class="strip-item">Hall of Fame</span>
+    <span class="strip-item">Backup Cloud</span>
+    <span class="strip-item">Multi-Annata</span>
+    <span class="strip-item">Analisi Performance</span>
+    <span class="strip-item">Gestione Atleti</span>
+    <span class="strip-item">Dati GPS</span>
+    <span class="strip-item">Calendario Presenze</span>
+    <span class="strip-item">Gestione Materiale</span>
+    <span class="strip-item">Hall of Fame</span>
+    <span class="strip-item">Backup Cloud</span>
+    <span class="strip-item">Multi-Annata</span>
+    <span class="strip-item">Analisi Performance</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="funzionalita">
+  <div class="container">
+    <div class="features-header reveal">
+      <div class="section-label">Funzionalità</div>
+      <h2 class="section-title">Tutto ciò di cui<br><span>hai bisogno</span></h2>
+      <p class="section-desc">Un ecosistema completo pensato per allenatori, dirigenti e staff tecnico di qualsiasi disciplina sportiva.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card reveal">
+        <span class="feat-icon">👥</span>
+        <div class="feat-title">Gestione Squadra</div>
+        <p class="feat-desc">Anagrafica completa di atleti e staff. Foto profilo, ruolo, numero maglia, scadenze visite mediche e tessere.</p>
+      </div>
+      <div class="feat-card reveal delay-1">
+        <span class="feat-icon">📊</span>
+        <div class="feat-title">Dati GPS & Performance</div>
+        <p class="feat-desc">Inserimento e analisi dati GPS per ogni atleta. Distanza, velocità, sprint, accelerazioni e statistiche di partita.</p>
+      </div>
+      <div class="feat-card reveal delay-2">
+        <span class="feat-icon">📋</span>
+        <div class="feat-title">Valutazioni & Presenze</div>
+        <p class="feat-desc">Sistema di pagelle per allenamenti e partite. Tracciamento presenze con grafici di andamento nel tempo.</p>
+      </div>
+      <div class="feat-card reveal">
+        <span class="feat-icon">📦</span>
+        <div class="feat-title">Gestione Materiale</div>
+        <p class="feat-desc">Inventario divise e materiale sportivo. Traccia consegne, restituzioni, taglie e quantità per ogni atleta.</p>
+      </div>
+      <div class="feat-card reveal delay-1">
+        <span class="feat-icon">📅</span>
+        <div class="feat-title">Calendario Attività</div>
+        <p class="feat-desc">Pianifica allenamenti e partite. Gli atleti ricevono il calendario direttamente nel proprio smartphone.</p>
+      </div>
+      <div class="feat-card reveal delay-2">
+        <span class="feat-icon">🏆</span>
+        <div class="feat-title">Risultati & Statistiche</div>
+        <p class="feat-desc">Archivio partite con risultati, marcatori, assist e cartellini. Statistiche di squadra per tutta la stagione.</p>
+      </div>
+      <div class="feat-card reveal">
+        <span class="feat-icon">🔐</span>
+        <div class="feat-title">Accessi Multi-Utente</div>
+        <p class="feat-label">Log completo degli accessi. Ogni azione è tracciata e associata all'utente che l'ha eseguita.</p>
+        <p class="feat-desc">Log completo degli accessi. Ogni azione è tracciata e associata all'utente che l'ha eseguita.</p>
+      </div>
+      <div class="feat-card reveal delay-1">
+        <span class="feat-icon">☁️</span>
+        <div class="feat-title">Cloud & Backup</div>
+        <p class="feat-desc">Tutti i dati salvati su cloud in tempo reale. Backup completo scaricabile in JSON con un clic.</p>
+      </div>
+      <div class="feat-card reveal delay-2">
+        <span class="feat-icon">📱</span>
+        <div class="feat-title">Mobile Friendly</div>
+        <p class="feat-desc">Interfaccia ottimizzata per smartphone e tablet. Usa l'app ovunque, direttamente dal browser.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section class="roles" id="utenti">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Profili Utente</div>
+      <h2 class="section-title">Il giusto accesso<br><span>per ogni ruolo</span></h2>
+      <p class="section-desc">9 profili configurabili con permessi granulari. Ogni utente vede e modifica solo ciò che gli compete.</p>
+    </div>
+    <div class="roles-grid">
+      <div class="role-card reveal">
+        <div class="role-icon">👑</div>
+        <div class="role-name">Admin</div>
+        <ul class="role-perms">
+          <li>Accesso completo</li>
+          <li>Gestione utenti & annate</li>
+          <li>Log accessi</li>
+          <li>Backup & ripristino</li>
+        </ul>
+      </div>
+      <div class="role-card reveal delay-1">
+        <div class="role-icon">🥇</div>
+        <div class="role-name">Coach L1</div>
+        <ul class="role-perms">
+          <li>Edit generale</li>
+          <li>GPS completo</li>
+          <li>Backup</li>
+        </ul>
+      </div>
+      <div class="role-card reveal delay-2">
+        <div class="role-icon">🥈</div>
+        <div class="role-name">Coach L2</div>
+        <ul class="role-perms">
+          <li>Edit generale</li>
+          <li>GPS visualizzazione</li>
+        </ul>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-icon">🥉</div>
+        <div class="role-name">Coach L3</div>
+        <ul class="role-perms">
+          <li>Solo lettura</li>
+          <li>GPS visualizzazione</li>
+        </ul>
+      </div>
+      <div class="role-card reveal delay-1">
+        <div class="role-icon">🏅</div>
+        <div class="role-name">Dirigente L1</div>
+        <ul class="role-perms">
+          <li>Edit generale + GPS</li>
+          <li>Materiale completo</li>
+          <li>Backup & Excel</li>
+        </ul>
+      </div>
+      <div class="role-card reveal delay-2">
+        <div class="role-icon">📂</div>
+        <div class="role-name">Dirigente L2</div>
+        <ul class="role-perms">
+          <li>Edit generale + GPS</li>
+          <li>Materiale atleti</li>
+        </ul>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-icon">📋</div>
+        <div class="role-name">Dirigente L3</div>
+        <ul class="role-perms">
+          <li>Edit squadra</li>
+          <li>Materiale lettura</li>
+        </ul>
+      </div>
+      <div class="role-card reveal delay-1">
+        <div class="role-icon">🗂️</div>
+        <div class="role-name">Dirigente L4</div>
+        <ul class="role-perms">
+          <li>Solo Squadra</li>
+          <li>Materiale atleti</li>
+        </ul>
+      </div>
+      <div class="role-card reveal delay-2">
+        <div class="role-icon">👁️</div>
+        <div class="role-name">Read-only</div>
+        <ul class="role-perms">
+          <li>Solo visualizzazione</li>
+          <li>Nessun edit</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="modules" id="moduli">
+  <div class="container">
+    <div class="modules-layout">
+      <div>
+        <div class="reveal">
+          <div class="section-label">Moduli</div>
+          <h2 class="section-title">Una piattaforma,<br><span>13 moduli</span></h2>
+          <p class="section-desc" style="margin-bottom:2rem;">Tutto integrato in un'unica dashboard accessibile da browser, senza installazioni.</p>
+        </div>
+        <div class="module-list">
+          <div class="module-item active reveal">
+            <span class="module-num">01</span>
+            <span class="module-name">Home Riepilogo</span>
+          </div>
+          <div class="module-item reveal delay-1">
+            <span class="module-num">02</span>
+            <span class="module-name">Formazione Tattica</span>
+          </div>
+          <div class="module-item reveal delay-1">
+            <span class="module-num">03</span>
+            <span class="module-name">Calendario Presenze</span>
+          </div>
+          <div class="module-item reveal delay-2">
+            <span class="module-num">04</span>
+            <span class="module-name">Gestione Squadra</span>
+          </div>
+          <div class="module-item reveal delay-2">
+            <span class="module-num">05</span>
+            <span class="module-name">Risultati & Statistiche</span>
+          </div>
+          <div class="module-item reveal delay-3">
+            <span class="module-num">06</span>
+            <span class="module-name">Valutazioni Atleti</span>
+          </div>
+          <div class="module-item reveal delay-3">
+            <span class="module-num">07</span>
+            <span class="module-name">Report Presenze</span>
+          </div>
+          <div class="module-item reveal delay-4">
+            <span class="module-num">08</span>
+            <span class="module-name">Hall of Fame</span>
+          </div>
+          <div class="module-item reveal delay-4">
+            <span class="module-num">09</span>
+            <span class="module-name">GPS & Performance</span>
+            <span class="module-tag tag-pro">Pro</span>
+          </div>
+          <div class="module-item reveal">
+            <span class="module-num">10</span>
+            <span class="module-name">Analisi Singolo Atleta</span>
+            <span class="module-tag tag-pro">Pro</span>
+          </div>
+          <div class="module-item reveal delay-1">
+            <span class="module-num">11</span>
+            <span class="module-name">Cal. Personale Atleta</span>
+          </div>
+          <div class="module-item reveal delay-2">
+            <span class="module-num">12</span>
+            <span class="module-name">Gestione Materiale</span>
+            <span class="module-tag tag-new">New</span>
+          </div>
+          <div class="module-item reveal delay-3">
+            <span class="module-num">13</span>
+            <span class="module-name">Log Accessi Utenti</span>
+            <span class="module-tag tag-new">New</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DASHBOARD MOCK -->
+      <div class="modules-visual reveal delay-2">
+        <div class="dashboard-mock">
+          <div class="mock-header">
+            <div class="mock-dot" style="background:#ef4444;"></div>
+            <div class="mock-dot" style="background:#f5c842;"></div>
+            <div class="mock-dot" style="background:#00ff88;"></div>
+            <span class="mock-title">Sport Monitoring</span>
+          </div>
+          <div class="mock-nav">
+            <span class="mock-tab active">Home</span>
+            <span class="mock-tab">Squadra</span>
+            <span class="mock-tab">GPS</span>
+            <span class="mock-tab">Materiale</span>
+            <span class="mock-tab">Accessi</span>
+          </div>
+          <div class="mock-grid">
+            <div class="mock-card">
+              <div class="mock-card-num">29</div>
+              <div class="mock-card-label">Atleti in Rosa</div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-num">38</div>
+              <div class="mock-card-label">Partite Giocate</div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-num" style="color:var(--accent2);">87%</div>
+              <div class="mock-card-label">Media Presenze</div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-num" style="color:var(--gold);">12.4</div>
+              <div class="mock-card-label">Km/h Media GPS</div>
+            </div>
+          </div>
+          <div class="mock-bar-row"><span class="mock-bar-label">Presenza</span><div class="mock-bar-bg"><div class="mock-bar-fill" style="width:87%;"></div></div></div>
+          <div class="mock-bar-row"><span class="mock-bar-label">Valutaz.</span><div class="mock-bar-bg"><div class="mock-bar-fill" style="width:73%;background:var(--accent2);"></div></div></div>
+          <div class="mock-bar-row"><span class="mock-bar-label">GPS</span><div class="mock-bar-bg"><div class="mock-bar-fill" style="width:62%;background:var(--gold);"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Screenshot & Anteprime</div>
+      <h2 class="section-title">Vedi l'app<br><span>in azione</span></h2>
+      <p class="section-desc">Scorri le anteprime dei principali moduli di Sport Monitoring.</p>
+    </div>
+    <div class="gallery-grid">
+
+      <!-- Card 1 -->
+      <div class="gallery-card reveal">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/home.png" alt="Home Riepilogo"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="gallery-placeholder" style="display:none;">
+            <span class="gallery-placeholder-icon">🏠</span>
+            <span class="gallery-placeholder-text">Home Riepilogo</span>
+          </div>
+          <span class="gallery-badge">Home</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Home Riepilogo</div>
+          <div class="gallery-caption">Dashboard principale con statistiche stagionali, prossima sessione, top performer e azioni rapide.</div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="gallery-card reveal delay-1">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/squadra.png" alt="Gestione Squadra"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="gallery-placeholder" style="display:none;">
+            <span class="gallery-placeholder-icon">👥</span>
+            <span class="gallery-placeholder-text">Gestione Squadra</span>
+          </div>
+          <span class="gallery-badge">Squadra</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Gestione Squadra</div>
+          <div class="gallery-caption">Anagrafica completa di atleti e staff con foto, ruolo, numero maglia e scadenze mediche.</div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="gallery-card reveal delay-2">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/materiale.png" alt="Gestione Materiale"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="gallery-placeholder" style="display:none;">
+            <span class="gallery-placeholder-icon">📦</span>
+            <span class="gallery-placeholder-text">Gestione Materiale</span>
+          </div>
+          <span class="gallery-badge">Materiale</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Gestione Materiale</div>
+          <div class="gallery-caption">Traccia consegne, restituzioni, taglie e quantità di divise e attrezzatura per ogni atleta.</div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="gallery-card reveal">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/gps.png" alt="GPS Performance"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="gallery-placeholder" style="display:none;">
+            <span class="gallery-placeholder-icon">📊</span>
+            <span class="gallery-placeholder-text">GPS & Performance</span>
+          </div>
+          <span class="gallery-badge">GPS</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">GPS & Performance</div>
+          <div class="gallery-caption">Grafici di confronto e analisi dati GPS: distanza, velocità, sprint e accelerazioni per atleta.</div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="gallery-card reveal delay-1">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/calendario.png" alt="Calendario"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="gallery-placeholder" style="display:none;">
+            <span class="gallery-placeholder-icon">📅</span>
+            <span class="gallery-placeholder-text">Calendario</span>
+          </div>
+          <span class="gallery-badge">Calendario</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Calendario Attività</div>
+          <div class="gallery-caption">Pianifica allenamenti e partite. Gli atleti ricevono il calendario direttamente sul loro smartphone.</div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="gallery-card reveal delay-2">
+        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+          <img src="screenshots/valutazioni.png" alt="Valutazioni"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="gallery-placeholder" style="display:none;">
+            <span class="gallery-placeholder-icon">📋</span>
+            <span class="gallery-placeholder-text">Valutazioni</span>
+          </div>
+          <span class="gallery-badge">Valutazioni</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Valutazioni & Presenze</div>
+          <div class="gallery-caption">Sistema di pagelle per ogni sessione con report grafici di andamento nel tempo.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="proof">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Chi la usa</div>
+      <h2 class="section-title">Già in campo<br><span>con successo</span></h2>
+    </div>
+    <div class="proof-grid">
+      <div class="proof-card reveal">
+        <p class="proof-text">Finalmente ho tutto in un posto. Valutazioni, presenze, materiale e GPS in una sola dashboard. Ha rivoluzionato la nostra gestione tecnica.</p>
+        <div class="proof-author">
+          <div class="proof-avatar">MR</div>
+          <div>
+            <div class="proof-name">Marco R.</div>
+            <div class="proof-role">Allenatore Prima Squadra</div>
+          </div>
+        </div>
+      </div>
+      <div class="proof-card reveal delay-1">
+        <p class="proof-text">Il modulo materiale ci ha fatto risparmiare ore ogni settimana. Sappiamo sempre chi ha cosa, in quale taglia e in che stato.</p>
+        <div class="proof-author">
+          <div class="proof-avatar">EF</div>
+          <div>
+            <div class="proof-name">Edy F.</div>
+            <div class="proof-role">Dirigente Sportivo</div>
+          </div>
+        </div>
+      </div>
+      <div class="proof-card reveal delay-2">
+        <p class="proof-text">I dati GPS integrati con le valutazioni ci danno una visione completa di ogni atleta. Non potremmo più farne a meno.</p>
+        <div class="proof-author">
+          <div class="proof-avatar">LP</div>
+          <div>
+            <div class="proof-name">Luca P.</div>
+            <div class="proof-role">Preparatore Atletico</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contatti">
+  <div class="container">
+    <div class="contact-inner">
+      <div>
+        <div class="reveal">
+          <div class="section-label">Contatti</div>
+          <h2 class="section-title">Porta Sport<span>Monitoring</span><br>nella tua squadra</h2>
+          <p class="section-desc" style="margin-bottom:2.5rem;">
+            Contattaci per ricevere informazioni sulla licenza, una demo personalizzata o per qualsiasi domanda.
+          </p>
+        </div>
+        <div class="contact-item reveal delay-1">
+          <span class="contact-ico">📧</span>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <a href="mailto:info@sportmonitoring.it" class="contact-item-val">info@sportmonitoring.it</a>
+          </div>
+        </div>
+        <div class="contact-item reveal delay-2">
+          <span class="contact-ico">💼</span>
+          <div>
+            <div class="contact-item-label">Licenze & Preventivi</div>
+            <a href="mailto:licenze@sportmonitoring.it" class="contact-item-val">licenze@sportmonitoring.it</a>
+          </div>
+        </div>
+        <div class="contact-item reveal delay-3">
+          <span class="contact-ico">🌐</span>
+          <div>
+            <div class="contact-item-label">Demo Live</div>
+            <a href="https://app-allenamento-r1.vercel.app" target="_blank" rel="noopener" rel="noopener" target="_blank" class="contact-item-val">app-allenamento-r1.vercel.app</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form reveal delay-2">
+        <div class="form-title">Richiedi Informazioni</div>
+        <form id="contact-form">
+          <div class="form-group">
+            <label class="form-label">Nome e Cognome *</label>
+            <input type="text" class="form-input" placeholder="Mario Rossi" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input type="email" class="form-input" placeholder="mario@squadra.it" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tipo di squadra</label>
+            <select class="form-select">
+              <option value="">Seleziona...</option>
+              <option>Calcio</option>
+              <option>Basket</option>
+              <option>Volley</option>
+              <option>Rugby</option>
+              <option>Altro sport</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Messaggio</label>
+            <textarea class="form-textarea" placeholder="Descrivi le tue esigenze..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Invia Richiesta →</button>
+        </form>
+        <div id="form-success">✅ Messaggio inviato! Ti risponderemo entro 24 ore.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <strong>Sport Monitoring</strong> — Tutti i diritti riservati<br>
+  <span style="font-size:.72rem;">Sviluppato da Edy Franzoso · Codice protetto ai sensi della L. 633/1941</span></p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Form submit
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  });
+
+  // Nav active on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
