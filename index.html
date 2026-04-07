@@ -46,67 +46,45 @@
   "inLanguage": "it"
 }
 
-  // Lightbox con navigazione frecce
-  var _lbCards = [];
-  var _lbIdx = 0;
-
-  function openLightbox(wrap) {
-    var img = wrap.querySelector('img');
-    if (!img || img.style.display === 'none' || !img.complete || img.naturalWidth === 0) return;
-    // Raccoglie tutte le card con immagine caricata
-    _lbCards = Array.from(document.querySelectorAll('.gallery-img-wrap')).filter(function(w) {
-      var i = w.querySelector('img');
-      return i && i.complete && i.naturalWidth > 0 && i.style.display !== 'none';
-    });
-    _lbIdx = _lbCards.indexOf(wrap);
-    _showLightbox(_lbIdx);
-  }
-
-  function _showLightbox(idx) {
-    var wrap = _lbCards[idx];
-    if (!wrap) return;
-    var img = wrap.querySelector('img');
-    var card = wrap.closest('.gallery-card');
-    var title = card ? (card.querySelector('.gallery-title') || {}).textContent || '' : '';
-    var desc  = card ? (card.querySelector('.gallery-caption') || {}).textContent || '' : '';
-    document.getElementById('lightbox-img').src   = img.src;
-    document.getElementById('lightbox-img').alt   = img.alt;
-    document.getElementById('lightbox-title').textContent = title;
-    document.getElementById('lightbox-desc').textContent  = desc;
+  // ── LIGHTBOX SEMPLICE ──────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
     var lb = document.getElementById('lightbox');
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    // Mostra/nascondi frecce
-    document.querySelector('.lightbox-prev').style.display = _lbCards.length > 1 ? '' : 'none';
-    document.querySelector('.lightbox-next').style.display = _lbCards.length > 1 ? '' : 'none';
-  }
+    if (!lb) return;
 
-  function lightboxNav(dir) {
-    _lbIdx = (_lbIdx + dir + _lbCards.length) % _lbCards.length;
-    _showLightbox(_lbIdx);
-  }
+    // Clic su qualsiasi gallery-card → apre lightbox
+    document.querySelectorAll('.gallery-card').forEach(function(card) {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function() {
+        var img = card.querySelector('img');
+        var title = card.querySelector('.gallery-title');
+        var desc  = card.querySelector('.gallery-caption');
+
+        // Mostra placeholder se non c'è immagine
+        var src = (img && img.naturalWidth > 0) ? img.src : '';
+        document.getElementById('lightbox-img').src   = src;
+        document.getElementById('lightbox-img').style.display = src ? '' : 'none';
+        document.getElementById('lightbox-title').textContent = title ? title.textContent : '';
+        document.getElementById('lightbox-desc').textContent  = desc  ? desc.textContent  : '';
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    // Chiudi cliccando sfondo
+    lb.addEventListener('click', function(e) {
+      if (e.target === lb) closeLightbox();
+    });
+  });
 
   function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
+    var lb = document.getElementById('lightbox');
+    if (lb) lb.classList.remove('open');
     document.body.style.overflow = '';
   }
 
-  // Chiudi cliccando fuori dall'inner — aspetta DOM
-  document.addEventListener('DOMContentLoaded', function() {
-    var lb = document.getElementById('lightbox');
-    if (lb) lb.addEventListener('click', function(e) {
-      if (e.target === this) closeLightbox();
-    });
-  });
-
   document.addEventListener('keydown', function(e) {
-    var lb = document.getElementById('lightbox');
-    if (!lb.classList.contains('open')) return;
     if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowRight') lightboxNav(+1);
-    if (e.key === 'ArrowLeft')  lightboxNav(-1);
   });
-
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -1075,7 +1053,7 @@
     <div class="gallery-grid" style="grid-template-columns:repeat(3,1fr);">
 
       <!-- Home -->
-      <div class="gallery-card reveal" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal" data-lb="0">
         <div class="gallery-img-wrap">
           <img src="screenshots/home.png" alt="Home Riepilogo"
                onerror="this.src='screenshots/Home.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1089,7 +1067,7 @@
       </div>
 
       <!-- Formazione -->
-      <div class="gallery-card reveal delay-1" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal delay-1" data-lb="1">
         <div class="gallery-img-wrap">
           <img src="screenshots/formazione.png" alt="Formazione Tattica"
                onerror="this.src='screenshots/Formazione.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1103,7 +1081,7 @@
       </div>
 
       <!-- Calendario -->
-      <div class="gallery-card reveal delay-2" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal delay-2" data-lb="2">
         <div class="gallery-img-wrap">
           <img src="screenshots/calendario.png" alt="Calendario"
                onerror="this.src='screenshots/Calendario.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1117,7 +1095,7 @@
       </div>
 
       <!-- Squadra -->
-      <div class="gallery-card reveal" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal" data-lb="3">
         <div class="gallery-img-wrap">
           <img src="screenshots/squadra.png" alt="Gestione Squadra"
                onerror="this.src='screenshots/Squadra.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1131,7 +1109,7 @@
       </div>
 
       <!-- Risultati -->
-      <div class="gallery-card reveal delay-1" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal delay-1" data-lb="4">
         <div class="gallery-img-wrap">
           <img src="screenshots/risultati.png" alt="Risultati Partite"
                onerror="this.src='screenshots/Risultati.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1145,7 +1123,7 @@
       </div>
 
       <!-- Valutazioni -->
-      <div class="gallery-card reveal delay-2" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal delay-2" data-lb="5">
         <div class="gallery-img-wrap">
           <img src="screenshots/valutazioni.png" alt="Valutazioni"
                onerror="this.src='screenshots/Valutazioni.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1159,7 +1137,7 @@
       </div>
 
       <!-- Presenze -->
-      <div class="gallery-card reveal" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal" data-lb="6">
         <div class="gallery-img-wrap">
           <img src="screenshots/presenze.png" alt="Report Presenze"
                onerror="this.src='screenshots/Presenze.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1173,7 +1151,7 @@
       </div>
 
       <!-- Hall of Fame -->
-      <div class="gallery-card reveal delay-1" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal delay-1" data-lb="7">
         <div class="gallery-img-wrap">
           <img src="screenshots/halloffame.png" alt="Hall of Fame"
                onerror="this.src='screenshots/HallofFame.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1187,7 +1165,7 @@
       </div>
 
       <!-- GPS -->
-      <div class="gallery-card reveal delay-2" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal delay-2" data-lb="8">
         <div class="gallery-img-wrap">
           <img src="screenshots/gps.png" alt="GPS Performance"
                onerror="this.src='screenshots/GPS.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1201,7 +1179,7 @@
       </div>
 
       <!-- Analisi -->
-      <div class="gallery-card reveal" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal" data-lb="9">
         <div class="gallery-img-wrap">
           <img src="screenshots/analisi.png" alt="Analisi Atleta"
                onerror="this.src='screenshots/Analisi.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1215,7 +1193,7 @@
       </div>
 
       <!-- Cal. Presenze -->
-      <div class="gallery-card reveal delay-1" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal delay-1" data-lb="10">
         <div class="gallery-img-wrap">
           <img src="screenshots/cal-presenze.png" alt="Calendario Presenze"
                onerror="this.src='screenshots/CalPresenze.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1229,7 +1207,7 @@
       </div>
 
       <!-- Materiale -->
-      <div class="gallery-card reveal delay-2" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal delay-2" data-lb="11">
         <div class="gallery-img-wrap">
           <img src="screenshots/materiale.png" alt="Gestione Materiale"
                onerror="this.src='screenshots/Materiale.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1243,7 +1221,7 @@
       </div>
 
       <!-- Accessi -->
-      <div class="gallery-card reveal" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+      <div class="gallery-card reveal" data-lb="12">
         <div class="gallery-img-wrap">
           <img src="screenshots/accessi.png" alt="Log Accessi"
                onerror="this.src='screenshots/Accessi.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
@@ -1262,17 +1240,16 @@
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox">
-  <button class="lightbox-close" onclick="closeLightbox()" title="Chiudi">✕</button>
-  <button class="lightbox-nav lightbox-prev" onclick="lightboxNav(-1)" title="Precedente">‹</button>
-  <button class="lightbox-nav lightbox-next" onclick="lightboxNav(+1)" title="Successivo">›</button>
   <div class="lightbox-inner" onclick="event.stopPropagation()">
+    <button onclick="closeLightbox()" class="lightbox-close">✕</button>
     <img class="lightbox-img" id="lightbox-img" src="" alt="">
     <div class="lightbox-info">
       <div class="lightbox-title" id="lightbox-title"></div>
-      <div class="lightbox-desc" id="lightbox-desc"></div>
+      <div class="lightbox-desc"  id="lightbox-desc"></div>
     </div>
   </div>
 </div>
+
 
 <!-- TESTIMONIALS -->
 <section class="proof">
