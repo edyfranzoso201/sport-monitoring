@@ -633,6 +633,58 @@
     .gallery-grid { grid-template-columns: 1fr; }
   }
 
+
+  /* ── BANNER PARTNER ─────────────────────────── */
+  .banner-partner {
+    padding: 28px 6%;
+    background: rgba(10,22,40,0.9);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative; z-index: 1;
+  }
+  .banner-partner-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+  }
+  .banner-partner-label {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--muted);
+    white-space: nowrap;
+  }
+  .banner-partner-content {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    gap: 32px; flex-wrap: wrap;
+  }
+  .banner-slot {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 24px;
+    text-decoration: none; transition: all .25s;
+    min-width: 220px;
+  }
+  .banner-slot:hover {
+    border-color: var(--accent); background: rgba(0,212,255,0.05);
+    transform: translateY(-2px);
+  }
+  .banner-slot-logo {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .banner-slot-text { display: flex; flex-direction: column; }
+  .banner-slot-name { font-weight: 700; font-size: .9rem; color: var(--text); }
+  .banner-slot-desc { font-size: .72rem; color: var(--muted); margin-top: 2px; }
+  .banner-slot-empty {
+    border-style: dashed; opacity: .5; cursor: default;
+  }
+  .banner-slot-empty:hover { transform: none; border-color: var(--border); background: transparent; }
+  @media (max-width: 700px) {
+    .banner-partner-inner { flex-direction: column; text-align: center; }
+    .banner-slot { min-width: 160px; }
+  }
+
 </style>
 </head>
 <body>
@@ -673,8 +725,8 @@
   </div>
 
   <!-- Screenshot app nell'hero -->
-  <div style="position:absolute; right:calc(6% + 160px); top:50%; transform:translateY(-50%);
-              z-index:1; max-width:520px; width:38%;
+  <div style="position:absolute; right:calc(6% + 160px); top:52px;
+              z-index:1; max-width:540px; width:40%;
               border-radius:12px; overflow:hidden;
               box-shadow:0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,212,255,0.15);
               animation:fadeUp .8s .4s ease both;">
@@ -717,6 +769,35 @@
     <span class="strip-item">Backup Cloud</span>
     <span class="strip-item">Multi-Annata</span>
     <span class="strip-item">Analisi Performance</span>
+  </div>
+</div>
+
+
+<!-- BANNER PARTNER -->
+<div class="banner-partner">
+  <div class="banner-partner-inner">
+    <span class="banner-partner-label">Partner &amp; Sponsor</span>
+    <div class="banner-partner-content">
+
+      <!-- Slot 1: Inserisci qui il link del partner -->
+      <a href="https://www.tuosito.it" target="_blank" rel="noopener" class="banner-slot">
+        <div class="banner-slot-logo">🌐</div>
+        <div class="banner-slot-text">
+          <span class="banner-slot-name">Nome Sito</span>
+          <span class="banner-slot-desc">Breve descrizione del partner</span>
+        </div>
+      </a>
+
+      <!-- Slot 2: Secondo partner (opzionale) -->
+      <a href="#" class="banner-slot banner-slot-empty" title="Slot disponibile">
+        <div class="banner-slot-logo" style="background:rgba(255,255,255,0.05);">➕</div>
+        <div class="banner-slot-text">
+          <span class="banner-slot-name" style="color:var(--muted);">Slot disponibile</span>
+          <span class="banner-slot-desc">Contattaci per inserire il tuo sito</span>
+        </div>
+      </a>
+
+    </div>
   </div>
 </div>
 
