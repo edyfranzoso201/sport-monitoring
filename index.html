@@ -91,9 +91,12 @@
     document.body.style.overflow = '';
   }
 
-  // Chiudi cliccando fuori dall'inner
-  document.getElementById('lightbox').addEventListener('click', function(e) {
-    if (e.target === this) closeLightbox();
+  // Chiudi cliccando fuori dall'inner — aspetta DOM
+  document.addEventListener('DOMContentLoaded', function() {
+    var lb = document.getElementById('lightbox');
+    if (lb) lb.addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
   });
 
   document.addEventListener('keydown', function(e) {
@@ -605,6 +608,7 @@
     position: relative; overflow: hidden;
     aspect-ratio: 16/10; background: var(--bg3);
     display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
   }
   .gallery-img-wrap img {
     width: 100%; height: 100%; object-fit: cover;
@@ -1071,8 +1075,8 @@
     <div class="gallery-grid" style="grid-template-columns:repeat(3,1fr);">
 
       <!-- Home -->
-      <div class="gallery-card reveal">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/home.png" alt="Home Riepilogo"
                onerror="this.src='screenshots/Home.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🏠</span><span class="gallery-placeholder-text">Home</span></div>
@@ -1085,8 +1089,8 @@
       </div>
 
       <!-- Formazione -->
-      <div class="gallery-card reveal delay-1">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal delay-1" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/formazione.png" alt="Formazione Tattica"
                onerror="this.src='screenshots/Formazione.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">⚽</span><span class="gallery-placeholder-text">Formazione</span></div>
@@ -1099,8 +1103,8 @@
       </div>
 
       <!-- Calendario -->
-      <div class="gallery-card reveal delay-2">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal delay-2" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/calendario.png" alt="Calendario"
                onerror="this.src='screenshots/Calendario.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📅</span><span class="gallery-placeholder-text">Calendario</span></div>
@@ -1113,8 +1117,8 @@
       </div>
 
       <!-- Squadra -->
-      <div class="gallery-card reveal">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/squadra.png" alt="Gestione Squadra"
                onerror="this.src='screenshots/Squadra.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">👥</span><span class="gallery-placeholder-text">Squadra</span></div>
@@ -1127,8 +1131,8 @@
       </div>
 
       <!-- Risultati -->
-      <div class="gallery-card reveal delay-1">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal delay-1" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/risultati.png" alt="Risultati Partite"
                onerror="this.src='screenshots/Risultati.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🏆</span><span class="gallery-placeholder-text">Risultati</span></div>
@@ -1141,8 +1145,8 @@
       </div>
 
       <!-- Valutazioni -->
-      <div class="gallery-card reveal delay-2">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal delay-2" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/valutazioni.png" alt="Valutazioni"
                onerror="this.src='screenshots/Valutazioni.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📋</span><span class="gallery-placeholder-text">Valutazioni</span></div>
@@ -1155,8 +1159,8 @@
       </div>
 
       <!-- Presenze -->
-      <div class="gallery-card reveal">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/presenze.png" alt="Report Presenze"
                onerror="this.src='screenshots/Presenze.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">✅</span><span class="gallery-placeholder-text">Presenze</span></div>
@@ -1169,8 +1173,8 @@
       </div>
 
       <!-- Hall of Fame -->
-      <div class="gallery-card reveal delay-1">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal delay-1" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/halloffame.png" alt="Hall of Fame"
                onerror="this.src='screenshots/HallofFame.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🌟</span><span class="gallery-placeholder-text">Hall of Fame</span></div>
@@ -1183,8 +1187,8 @@
       </div>
 
       <!-- GPS -->
-      <div class="gallery-card reveal delay-2">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal delay-2" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/gps.png" alt="GPS Performance"
                onerror="this.src='screenshots/GPS.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📊</span><span class="gallery-placeholder-text">GPS</span></div>
@@ -1197,8 +1201,8 @@
       </div>
 
       <!-- Analisi -->
-      <div class="gallery-card reveal">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/analisi.png" alt="Analisi Atleta"
                onerror="this.src='screenshots/Analisi.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🔍</span><span class="gallery-placeholder-text">Analisi</span></div>
@@ -1211,8 +1215,8 @@
       </div>
 
       <!-- Cal. Presenze -->
-      <div class="gallery-card reveal delay-1">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal delay-1" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/cal-presenze.png" alt="Calendario Presenze"
                onerror="this.src='screenshots/CalPresenze.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📆</span><span class="gallery-placeholder-text">Cal. Presenze</span></div>
@@ -1225,8 +1229,8 @@
       </div>
 
       <!-- Materiale -->
-      <div class="gallery-card reveal delay-2">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal delay-2" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/materiale.png" alt="Gestione Materiale"
                onerror="this.src='screenshots/Materiale.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📦</span><span class="gallery-placeholder-text">Materiale</span></div>
@@ -1239,8 +1243,8 @@
       </div>
 
       <!-- Accessi -->
-      <div class="gallery-card reveal">
-        <div class="gallery-img-wrap" onclick="openLightbox(this)">
+      <div class="gallery-card reveal" onclick="openLightbox(this.querySelector('.gallery-img-wrap'))" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
           <img src="screenshots/accessi.png" alt="Log Accessi"
                onerror="this.src='screenshots/Accessi.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🔐</span><span class="gallery-placeholder-text">Accessi</span></div>
