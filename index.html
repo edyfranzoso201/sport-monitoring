@@ -48,7 +48,7 @@
   // Lightbox
   function openLightbox(wrap) {
     var img = wrap.querySelector('img');
-    if (!img || img.style.display === 'none') return; // no image loaded
+    if (!img || img.style.display === 'none' || !img.complete || img.naturalWidth === 0) return; // no image loaded
     var lb = document.getElementById('lightbox');
     var lbImg = document.getElementById('lightbox-img');
     var lbCap = document.getElementById('lightbox-caption');
@@ -985,7 +985,7 @@
       <div class="gallery-card reveal">
         <div class="gallery-img-wrap" onclick="openLightbox(this)">
           <img src="screenshots/home.png" alt="Home Riepilogo"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+               onerror="this.src='screenshots/Home.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;">
             <span class="gallery-placeholder-icon">🏠</span>
             <span class="gallery-placeholder-text">Home Riepilogo</span>
@@ -1002,7 +1002,7 @@
       <div class="gallery-card reveal delay-1">
         <div class="gallery-img-wrap" onclick="openLightbox(this)">
           <img src="screenshots/squadra.png" alt="Gestione Squadra"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+               onerror="this.src='screenshots/Squadra.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;">
             <span class="gallery-placeholder-icon">👥</span>
             <span class="gallery-placeholder-text">Gestione Squadra</span>
@@ -1019,7 +1019,7 @@
       <div class="gallery-card reveal delay-2">
         <div class="gallery-img-wrap" onclick="openLightbox(this)">
           <img src="screenshots/materiale.png" alt="Gestione Materiale"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+               onerror="this.src='screenshots/Materiale.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;">
             <span class="gallery-placeholder-icon">📦</span>
             <span class="gallery-placeholder-text">Gestione Materiale</span>
@@ -1036,7 +1036,7 @@
       <div class="gallery-card reveal">
         <div class="gallery-img-wrap" onclick="openLightbox(this)">
           <img src="screenshots/gps.png" alt="GPS Performance"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+               onerror="this.src='screenshots/GPS.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;">
             <span class="gallery-placeholder-icon">📊</span>
             <span class="gallery-placeholder-text">GPS & Performance</span>
@@ -1053,7 +1053,7 @@
       <div class="gallery-card reveal delay-1">
         <div class="gallery-img-wrap" onclick="openLightbox(this)">
           <img src="screenshots/calendario.png" alt="Calendario"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+               onerror="this.src='screenshots/Calendario.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;">
             <span class="gallery-placeholder-icon">📅</span>
             <span class="gallery-placeholder-text">Calendario</span>
@@ -1070,7 +1070,7 @@
       <div class="gallery-card reveal delay-2">
         <div class="gallery-img-wrap" onclick="openLightbox(this)">
           <img src="screenshots/valutazioni.png" alt="Valutazioni"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+               onerror="this.src='screenshots/Valutazioni.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;">
             <span class="gallery-placeholder-icon">📋</span>
             <span class="gallery-placeholder-text">Valutazioni</span>
