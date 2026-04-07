@@ -46,26 +46,62 @@
   "inLanguage": "it"
 }
 
-  // Lightbox
+  // Lightbox con navigazione frecce
+  var _lbCards = [];
+  var _lbIdx = 0;
+
   function openLightbox(wrap) {
     var img = wrap.querySelector('img');
-    if (!img || img.style.display === 'none' || !img.complete || img.naturalWidth === 0) return; // no image loaded
-    var lb = document.getElementById('lightbox');
-    var lbImg = document.getElementById('lightbox-img');
-    var lbCap = document.getElementById('lightbox-caption');
-    lbImg.src = img.src;
-    lbImg.alt = img.alt;
+    if (!img || img.style.display === 'none' || !img.complete || img.naturalWidth === 0) return;
+    // Raccoglie tutte le card con immagine caricata
+    _lbCards = Array.from(document.querySelectorAll('.gallery-img-wrap')).filter(function(w) {
+      var i = w.querySelector('img');
+      return i && i.complete && i.naturalWidth > 0 && i.style.display !== 'none';
+    });
+    _lbIdx = _lbCards.indexOf(wrap);
+    _showLightbox(_lbIdx);
+  }
+
+  function _showLightbox(idx) {
+    var wrap = _lbCards[idx];
+    if (!wrap) return;
+    var img = wrap.querySelector('img');
     var card = wrap.closest('.gallery-card');
-    lbCap.textContent = card ? card.querySelector('.gallery-title').textContent : '';
+    var title = card ? (card.querySelector('.gallery-title') || {}).textContent || '' : '';
+    var desc  = card ? (card.querySelector('.gallery-caption') || {}).textContent || '' : '';
+    document.getElementById('lightbox-img').src   = img.src;
+    document.getElementById('lightbox-img').alt   = img.alt;
+    document.getElementById('lightbox-title').textContent = title;
+    document.getElementById('lightbox-desc').textContent  = desc;
+    var lb = document.getElementById('lightbox');
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
+    // Mostra/nascondi frecce
+    document.querySelector('.lightbox-prev').style.display = _lbCards.length > 1 ? '' : 'none';
+    document.querySelector('.lightbox-next').style.display = _lbCards.length > 1 ? '' : 'none';
   }
+
+  function lightboxNav(dir) {
+    _lbIdx = (_lbIdx + dir + _lbCards.length) % _lbCards.length;
+    _showLightbox(_lbIdx);
+  }
+
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('open');
     document.body.style.overflow = '';
   }
+
+  // Chiudi cliccando fuori dall'inner
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+  });
+
   document.addEventListener('keydown', function(e) {
+    var lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
     if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') lightboxNav(+1);
+    if (e.key === 'ArrowLeft')  lightboxNav(-1);
   });
 
 </script>
@@ -605,27 +641,65 @@
 
   /* Lightbox */
   .lightbox {
-    display: none; position: fixed; inset: 0; z-index: 1000;
-    background: rgba(0,0,0,.92); backdrop-filter: blur(10px);
+    display: none; position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,.94); backdrop-filter: blur(12px);
     align-items: center; justify-content: center; padding: 20px;
+    animation: lbFadeIn .2s ease;
   }
+  @keyframes lbFadeIn { from { opacity:0; } to { opacity:1; } }
   .lightbox.open { display: flex; }
+
+  .lightbox-inner {
+    position: relative; display: flex; flex-direction: column;
+    align-items: center; gap: 20px;
+    max-width: min(92vw, 1100px); max-height: 92vh;
+    animation: lbSlideUp .25s ease;
+  }
+  @keyframes lbSlideUp { from { transform:translateY(30px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+
   .lightbox-img {
-    max-width: 90vw; max-height: 85vh; border-radius: 8px;
-    box-shadow: 0 0 80px rgba(0,212,255,.15);
+    max-width: 100%; max-height: 72vh;
+    border-radius: 10px;
+    box-shadow: 0 0 80px rgba(0,212,255,.15), 0 30px 60px rgba(0,0,0,.6);
+    display: block;
   }
+
+  .lightbox-info {
+    text-align: center;
+    background: rgba(10,22,40,.9); border: 1px solid rgba(0,212,255,.2);
+    border-radius: 10px; padding: 16px 28px;
+    width: 100%;
+  }
+  .lightbox-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.4rem; font-weight: 700; text-transform: uppercase;
+    color: var(--accent); letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .lightbox-desc {
+    font-size: .9rem; color: var(--muted); line-height: 1.6;
+  }
+
   .lightbox-close {
-    position: absolute; top: 20px; right: 24px;
+    position: fixed; top: 20px; right: 24px;
+    font-size: 1.8rem; color: var(--muted); cursor: pointer;
+    background: rgba(10,22,40,.8); border: 1px solid var(--border);
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s; z-index: 2001; line-height: 1;
+  }
+  .lightbox-close:hover { color: var(--accent); border-color: var(--accent); background: rgba(0,212,255,.1); }
+
+  .lightbox-nav {
+    position: fixed; top: 50%; transform: translateY(-50%);
     font-size: 2rem; color: var(--muted); cursor: pointer;
-    background: none; border: none; transition: color .2s;
+    background: rgba(10,22,40,.7); border: 1px solid var(--border);
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s; z-index: 2001;
   }
-  .lightbox-close:hover { color: var(--accent); }
-  .lightbox-caption {
-    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-    color: var(--muted); font-size: .85rem; letter-spacing: 1px;
-    background: rgba(5,10,18,.8); padding: 8px 20px; border-radius: 100px;
-    white-space: nowrap;
-  }
+  .lightbox-nav:hover { color: var(--accent); border-color: var(--accent); }
+  .lightbox-prev { left: 16px; }
+  .lightbox-next { right: 16px; }
 
   @media (max-width: 900px) {
     .gallery-grid { grid-template-columns: 1fr 1fr; }
@@ -1183,10 +1257,17 @@
 </section>
 
 <!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-  <img class="lightbox-img" id="lightbox-img" src="" alt="">
-  <div class="lightbox-caption" id="lightbox-caption"></div>
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()" title="Chiudi">✕</button>
+  <button class="lightbox-nav lightbox-prev" onclick="lightboxNav(-1)" title="Precedente">‹</button>
+  <button class="lightbox-nav lightbox-next" onclick="lightboxNav(+1)" title="Successivo">›</button>
+  <div class="lightbox-inner" onclick="event.stopPropagation()">
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <div class="lightbox-info">
+      <div class="lightbox-title" id="lightbox-title"></div>
+      <div class="lightbox-desc" id="lightbox-desc"></div>
+    </div>
+  </div>
 </div>
 
 <!-- TESTIMONIALS -->
