@@ -588,7 +588,7 @@
   /* Lightbox */
   .lightbox {
     display: none; position: fixed; inset: 0; z-index: 2000;
-    background: rgba(0,0,0,.94); backdrop-filter: blur(12px);
+    background: rgba(0,0,0,.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     align-items: center; justify-content: center; padding: 20px;
     animation: lbFadeIn .2s ease;
   }
@@ -1192,6 +1192,62 @@
         <div class="gallery-body">
           <div class="gallery-title">Log Accessi Utenti</div>
           <div class="gallery-caption">Storico completo di tutti gli accessi con data, ora, utente e ruolo. Filtrabile per utente. Visibile solo all'admin.</div>
+        </div>
+      </div>
+
+      <!-- Convocazioni -->
+      <div class="gallery-card reveal" data-lb="13" onclick="lbOpen(this)" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
+          <img src="screenshots/convocazioni.png" alt="Gestione Convocazioni"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📋</span><span class="gallery-placeholder-text">Convocazioni</span></div>
+          <span class="gallery-badge">Convocazioni</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Gestione Convocazioni</div>
+          <div class="gallery-caption">Crea e salva moduli PRE-convocazione e convocazioni ufficiali. Importa gare da LND o inserisci manualmente partite in casa e fuori.</div>
+        </div>
+      </div>
+
+      <!-- Pagamenti -->
+      <div class="gallery-card reveal delay-1" data-lb="14" onclick="lbOpen(this)" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
+          <img src="screenshots/pagamenti.png" alt="Monitoraggio Pagamenti"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">💰</span><span class="gallery-placeholder-text">Pagamenti</span></div>
+          <span class="gallery-badge">Pagamenti</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Monitoraggio Pagamenti</div>
+          <div class="gallery-caption">Traccia le quote di iscrizione con date e rate per ogni atleta e annata. Storico completo e aggiornato in tempo reale.</div>
+        </div>
+      </div>
+
+      <!-- Area Atleta -->
+      <div class="gallery-card reveal delay-2" data-lb="15" onclick="lbOpen(this)" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
+          <img src="screenshots/area-atleta.png" alt="Area Atleta"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🏃</span><span class="gallery-placeholder-text">Area Atleta</span></div>
+          <span class="gallery-badge">Area Atleta</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Area Atleta</div>
+          <div class="gallery-caption">Portale dedicato agli atleti: comunica assenze, consulta bacheche e convocazioni, visualizza materiale consegnato e carica documenti.</div>
+        </div>
+      </div>
+
+      <!-- Dashboard Direzione -->
+      <div class="gallery-card reveal" data-lb="16" onclick="lbOpen(this)" style="cursor:pointer;">
+        <div class="gallery-img-wrap">
+          <img src="screenshots/direzione.png" alt="Dashboard Direzione"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🏢</span><span class="gallery-placeholder-text">Direzione</span></div>
+          <span class="gallery-badge">Direzione</span>
+        </div>
+        <div class="gallery-body">
+          <div class="gallery-title">Dashboard Direzione</div>
+          <div class="gallery-caption">Pannello riservato alla direzione: atleti, staff, presenze e materiale di tutte le annate. Vista globale dei pagamenti quote.</div>
         </div>
       </div>
 
