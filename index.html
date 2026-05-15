@@ -1594,7 +1594,9 @@ var HC = {
     thumbs[this.cur].classList.add('hc-on');
     dots[this.cur].classList.add('hc-on');
     document.getElementById('hcLabel').textContent = this.slides[this.cur].label;
-    thumbs[this.cur].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    var container = document.getElementById('hcThumbs');
+    var th = thumbs[this.cur];
+    container.scrollTo({ left: th.offsetLeft - (container.offsetWidth - th.offsetWidth) / 2, behavior: 'smooth' });
     this.resetBar();
   },
 
