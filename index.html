@@ -197,6 +197,89 @@
   }
   .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
+  /* ── HERO LAYOUT ─────────────────────────── */
+  .hero-inner {
+    position: relative; z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    align-items: center;
+    gap: 48px;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 120px 6% 80px;
+  }
+
+  /* ── HERO CAROUSEL ────────────────────────── */
+  .hc-wrap { display: flex; flex-direction: column; gap: 12px; animation: fadeUp .8s .3s ease both; }
+
+  .hc-main {
+    position: relative; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(0,212,255,.2);
+    cursor: pointer; background: var(--bg3); aspect-ratio: 16/10;
+  }
+  .hc-main img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0; transition: opacity .5s ease;
+  }
+  .hc-main img.hc-on { opacity: 1; }
+
+  .hc-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+    background: linear-gradient(transparent, rgba(0,0,0,.75));
+    padding: 24px 16px 12px;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    pointer-events: none;
+  }
+  .hc-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: .75rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .hc-hint { font-size: .68rem; color: rgba(255,255,255,.45); }
+
+  .hc-bar {
+    position: absolute; bottom: 0; left: 0; height: 3px;
+    background: var(--accent); z-index: 3;
+    animation: hcBar 4s linear infinite;
+  }
+  @keyframes hcBar { from { width: 0; } to { width: 100%; } }
+
+  .hc-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(0,0,0,.55); border: 1px solid rgba(0,212,255,.35);
+    color: var(--accent); font-size: 1.2rem; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all .2s;
+  }
+  .hc-arrow:hover { background: rgba(0,212,255,.25); border-color: var(--accent); }
+  .hc-prev { left: 10px; }
+  .hc-next { right: 10px; }
+
+  .hc-thumbs {
+    display: flex; gap: 8px;
+    overflow-x: auto; scrollbar-width: none; padding: 2px 0;
+  }
+  .hc-thumbs::-webkit-scrollbar { display: none; }
+  .hc-thumb {
+    flex-shrink: 0; width: 62px; height: 40px;
+    border-radius: 6px; overflow: hidden;
+    border: 2px solid transparent;
+    cursor: pointer; opacity: .45; transition: all .3s;
+  }
+  .hc-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hc-thumb.hc-on { border-color: var(--accent); opacity: 1; box-shadow: 0 0 10px rgba(0,212,255,.4); }
+  .hc-thumb:hover { opacity: .75; }
+
+  .hc-dots { display: flex; gap: 6px; justify-content: center; }
+  .hc-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--muted); cursor: pointer; transition: all .3s;
+  }
+  .hc-dot.hc-on { background: var(--accent); width: 20px; border-radius: 3px; box-shadow: 0 0 8px rgba(0,212,255,.5); }
+
   .hero-stats {
     position: absolute; right: 6%; bottom: 10%;
     display: flex; flex-direction: column; gap: 1.5rem; z-index: 1;
@@ -509,6 +592,7 @@
 
   /* ── RESPONSIVE ───────────────────────────── */
   @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; padding: 100px 5% 60px; }
     .nav-links { display: none; }
     .hero-stats { display: none; }
     .features-grid { grid-template-columns: 1fr; }
@@ -725,31 +809,40 @@
   <div class="hero-grid"></div>
   <div class="orb orb1"></div>
   <div class="orb orb2"></div>
-  <div class="hero-content">
-    <div class="hero-badge">Piattaforma Professionale</div>
-    <h1>Sport<em>Monitoring</em></h1>
-    <p class="hero-sub">
-      La piattaforma completa per la gestione professionale di squadre sportive.
-      Atleti, valutazioni, GPS, materiale, calendari e molto altro — tutto in un unico sistema.
-    </p>
-    <div class="hero-actions">
-      <a href="https://app-allenamento-r1.vercel.app" target="_blank" rel="noopener" class="btn-primary">
-        <span>Accedi all'App</span> →
-      </a>
-      <a href="#funzionalita" class="btn-outline">
-        <span>Scopri le funzionalità</span>
-      </a>
-    </div>
-  </div>
 
-  <!-- Screenshot app nell'hero -->
-  <div style="position:absolute; right:calc(6% + 160px); top:100px;
-              z-index:1; max-width:540px; width:40%;
-              border-radius:12px; overflow:hidden;
-              box-shadow:0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,212,255,0.15);
-              animation:fadeUp .8s .4s ease both;">
-    <img src="abc.png" alt="Sport Monitoring App"
-         style="width:100%; display:block; border-radius:12px;">
+  <div class="hero-inner">
+    <!-- Testo -->
+    <div class="hero-content" style="animation:fadeUp .8s ease both;">
+      <div class="hero-badge">Piattaforma Professionale</div>
+      <h1>Sport<em>Monitoring</em></h1>
+      <p class="hero-sub">
+        La piattaforma completa per la gestione professionale di squadre sportive.
+        Atleti, valutazioni, GPS, materiale, calendari e molto altro — tutto in un unico sistema.
+      </p>
+      <div class="hero-actions">
+        <a href="https://app-allenamento-r1.vercel.app" target="_blank" rel="noopener" class="btn-primary">
+          <span>Accedi all'App</span> →
+        </a>
+        <a href="#funzionalita" class="btn-outline">
+          <span>Scopri le funzionalità</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Carosello -->
+    <div class="hc-wrap">
+      <div class="hc-main" id="hcMain" onclick="hcZoom()">
+        <div class="hc-overlay">
+          <span class="hc-label" id="hcLabel">Home Riepilogo</span>
+          <span class="hc-hint">🔍 Clicca per ingrandire</span>
+        </div>
+        <div class="hc-bar" id="hcBar"></div>
+        <button class="hc-arrow hc-prev" onclick="event.stopPropagation();hcMove(-1)">&#8249;</button>
+        <button class="hc-arrow hc-next" onclick="event.stopPropagation();hcMove(1)">&#8250;</button>
+      </div>
+      <div class="hc-thumbs" id="hcThumbs"></div>
+      <div class="hc-dots" id="hcDots"></div>
+    </div>
   </div>
 
   <div class="hero-stats">
@@ -758,7 +851,7 @@
       <div class="stat-label">Ruoli Utente</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num">13+</div>
+      <div class="stat-num">17+</div>
       <div class="stat-label">Moduli Integrati</div>
     </div>
     <div class="stat-card">
@@ -1437,6 +1530,106 @@ function lbClose() {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') lbClose();
 });
+</script>
+<script>
+// ── Hero Carousel ──────────────────────────────────────────
+var HC = {
+  slides: [
+    { src: 'screenshots/home.png',         label: 'Home Riepilogo' },
+    { src: 'screenshots/squadra.png',      label: 'Gestione Squadra' },
+    { src: 'screenshots/formazione.png',   label: 'Formazione Tattica' },
+    { src: 'screenshots/risultati.png',    label: 'Risultati Partite' },
+    { src: 'screenshots/gps.png',          label: 'GPS & Performance' },
+    { src: 'screenshots/analisi.png',      label: 'Analisi Atleta' },
+    { src: 'screenshots/convocazioni.png', label: 'Gestione Convocazioni' },
+    { src: 'screenshots/area-atleta.png',  label: 'Area Atleta' },
+    { src: 'screenshots/materiale.png',    label: 'Gestione Materiale' },
+    { src: 'screenshots/direzione.png',    label: 'Dashboard Direzione' }
+  ],
+  cur: 0,
+  timer: null,
+  interval: 4000,
+
+  init: function() {
+    var main = document.getElementById('hcMain');
+    var thumbsEl = document.getElementById('hcThumbs');
+    var dotsEl = document.getElementById('hcDots');
+    var overlay = main.querySelector('.hc-overlay');
+
+    this.slides.forEach(function(s, i) {
+      var img = document.createElement('img');
+      img.src = s.src; img.alt = s.label;
+      if (i === 0) img.classList.add('hc-on');
+      main.insertBefore(img, overlay);
+
+      var th = document.createElement('div');
+      th.className = 'hc-thumb' + (i === 0 ? ' hc-on' : '');
+      th.innerHTML = '<img src="' + s.src + '" alt="' + s.label + '">';
+      th.dataset.i = i;
+      th.addEventListener('click', function(e) { e.stopPropagation(); HC.go(+this.dataset.i); });
+      thumbsEl.appendChild(th);
+
+      var dot = document.createElement('div');
+      dot.className = 'hc-dot' + (i === 0 ? ' hc-on' : '');
+      dot.dataset.i = i;
+      dot.addEventListener('click', function() { HC.go(+this.dataset.i); });
+      dotsEl.appendChild(dot);
+    });
+
+    this.startTimer();
+  },
+
+  go: function(idx) {
+    var imgs   = document.querySelectorAll('#hcMain img');
+    var thumbs = document.querySelectorAll('#hcThumbs .hc-thumb');
+    var dots   = document.querySelectorAll('#hcDots .hc-dot');
+
+    imgs[this.cur].classList.remove('hc-on');
+    thumbs[this.cur].classList.remove('hc-on');
+    dots[this.cur].classList.remove('hc-on');
+
+    this.cur = (idx + this.slides.length) % this.slides.length;
+
+    imgs[this.cur].classList.add('hc-on');
+    thumbs[this.cur].classList.add('hc-on');
+    dots[this.cur].classList.add('hc-on');
+    document.getElementById('hcLabel').textContent = this.slides[this.cur].label;
+    thumbs[this.cur].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    this.resetBar();
+  },
+
+  startTimer: function() {
+    var self = this;
+    this.timer = setInterval(function() { self.go(self.cur + 1); }, this.interval);
+  },
+
+  stopTimer: function() { clearInterval(this.timer); },
+
+  resetBar: function() {
+    var bar = document.getElementById('hcBar');
+    bar.style.animation = 'none';
+    bar.offsetHeight;
+    bar.style.animation = 'hcBar ' + (this.interval / 1000) + 's linear';
+  }
+};
+
+function hcMove(dir) {
+  HC.stopTimer();
+  HC.go(HC.cur + dir);
+  HC.startTimer();
+}
+
+function hcZoom() {
+  var s = HC.slides[HC.cur];
+  document.getElementById('lb-img').src = s.src;
+  document.getElementById('lb-title').textContent = s.label;
+  document.getElementById('lb-desc').textContent = '';
+  var lb = document.getElementById('lb');
+  lb.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+document.addEventListener('DOMContentLoaded', function() { HC.init(); });
 </script>
 </body>
 </html>
