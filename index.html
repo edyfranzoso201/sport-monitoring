@@ -10,6 +10,8 @@
 <meta name="robots" content="index, follow">
 <meta name="google-site-verification" content="DSNdkeM9jtaHHnc_EOjyL4-edKgqPjy2kXP4Car_f2E">
 <link rel="canonical" href="https://sport-monitoring.vercel.app/">
+<meta name="theme-color" content="#050a12">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23050a12'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='30' font-weight='900' text-anchor='middle' fill='%2300d4ff'%3ESM%3C/text%3E%3C/svg%3E">
 
 <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
 <meta property="og:type" content="website">
@@ -17,6 +19,8 @@
 <meta property="og:title" content="Sport Monitoring — Gestione Sportiva Professionale">
 <meta property="og:description" content="La piattaforma cloud completa per allenatori e dirigenti. Atleti, GPS, valutazioni, materiale e calendario in un unico sistema.">
 <meta property="og:image" content="https://sport-monitoring.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Sport Monitoring">
 
@@ -211,7 +215,9 @@
   }
 
   /* ── HERO CAROUSEL ────────────────────────── */
-  .hc-wrap { display: flex; flex-direction: column; gap: 12px; animation: fadeUp .8s .3s ease both; }
+  .hero-inner > * { min-width: 0; }
+  .hc-wrap { display: flex; flex-direction: column; gap: 12px; animation: fadeUp .8s .3s ease both; max-width: 100%; }
+  .hc-thumbs { max-width: 100%; }
 
   .hc-main {
     position: relative; border-radius: 14px; overflow: hidden;
@@ -590,10 +596,39 @@
   .reveal.delay-3 { transition-delay: .3s; }
   .reveal.delay-4 { transition-delay: .4s; }
 
+  /* ── MOBILE NAV ───────────────────────────── */
+  .nav-burger {
+    display: none; background: none; border: 1px solid var(--border);
+    color: var(--text); font-size: 1.2rem; line-height: 1;
+    width: 40px; height: 40px; border-radius: 6px; cursor: pointer;
+    transition: all .2s;
+  }
+  .nav-burger:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── REDUCED MOTION ───────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    html { scroll-behavior: auto; }
+  }
+
   /* ── RESPONSIVE ───────────────────────────── */
   @media (max-width: 900px) {
     .hero-inner { grid-template-columns: 1fr; padding: 100px 5% 60px; }
-    .nav-links { display: none; }
+    .nav-links {
+      display: none;
+      position: fixed; top: 76px; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: rgba(5,10,18,0.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 6% 16px;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.05); font-size: .95rem; }
+    .nav-links a:last-child { border-bottom: none; }
+    .nav-burger { display: flex; align-items: center; justify-content: center; }
+    nav { gap: 10px; padding: 14px 5%; }
+    .nav-logo { font-size: 1.25rem; }
+    .nav-cta { margin-left: auto; padding: 8px 14px; font-size: .7rem; white-space: nowrap; }
     .hero-stats { display: none; }
     .features-grid { grid-template-columns: 1fr; }
     .modules-layout { grid-template-columns: 1fr; }
@@ -801,7 +836,8 @@
     <a href="#moduli">Moduli</a>
     <a href="#contatti">Contatti</a>
   </div>
-  <a href="https://app-allenamento-r1.vercel.app" target="_blank" rel="noopener" rel="noopener" class="nav-cta">Accedi all'App →</a>
+  <a href="https://app-allenamento-r1.vercel.app" target="_blank" rel="noopener" class="nav-cta">Accedi all'App →</a>
+  <button class="nav-burger" id="navBurger" aria-label="Apri menu" aria-expanded="false" onclick="navToggle()">☰</button>
 </nav>
 
 <!-- HERO -->
@@ -903,7 +939,7 @@
         <div class="banner-slot-logo">🌐</div>
         <div class="banner-slot-text">
           <span class="banner-slot-name">CERCA nel MONDO dello SPORT</span>
-          <span class="banner-slot-desc">CERCA nel MONDO dello SPORT</span>
+          <span class="banner-slot-desc">Il portale di ricerca dedicato al mondo dello sport</span>
         </div>
       </a>
       <!-- ▲ FINE MODIFICA ▲ -->
@@ -954,7 +990,6 @@
       <div class="feat-card reveal">
         <span class="feat-icon">🔐</span>
         <div class="feat-title">Accessi Multi-Utente</div>
-        <p class="feat-label">Log completo degli accessi. Ogni azione è tracciata e associata all'utente che l'ha eseguita.</p>
         <p class="feat-desc">Log completo degli accessi. Ogni azione è tracciata e associata all'utente che l'ha eseguita.</p>
       </div>
       <div class="feat-card reveal delay-1">
@@ -979,6 +1014,53 @@
       <h2 class="section-title">Il giusto accesso<br><span>per ogni ruolo</span></h2>
       <p class="section-desc">9 profili configurabili con permessi granulari: Admin, Coach L1/L2/L3, Dirigente L1/L2/L3/L4 e Read-only. Ogni utente vede e modifica solo ciò che gli compete.</p>
     </div>
+    <div class="roles-grid">
+      <div class="role-card reveal">
+        <div class="role-icon">🛡️</div>
+        <div class="role-name">Admin</div>
+        <ul class="role-perms">
+          <li>Controllo completo</li>
+          <li>Gestione utenti e permessi</li>
+          <li>Log accessi e backup</li>
+        </ul>
+      </div>
+      <div class="role-card reveal delay-1">
+        <div class="role-icon">🎯</div>
+        <div class="role-name">Coach L1 / L2 / L3</div>
+        <ul class="role-perms">
+          <li>Gestione squadra e formazioni</li>
+          <li>Valutazioni, presenze e GPS</li>
+          <li>Permessi crescenti per livello</li>
+        </ul>
+      </div>
+      <div class="role-card reveal delay-2">
+        <div class="role-icon">💼</div>
+        <div class="role-name">Dirigente L1 – L4</div>
+        <ul class="role-perms">
+          <li>Materiale e pagamenti</li>
+          <li>Convocazioni e calendario</li>
+          <li>4 livelli di accesso</li>
+        </ul>
+      </div>
+      <div class="role-card reveal delay-3">
+        <div class="role-icon">👁️</div>
+        <div class="role-name">Read-Only</div>
+        <ul class="role-perms">
+          <li>Consultazione dati</li>
+          <li>Nessuna modifica possibile</li>
+          <li>Ideale per osservatori</li>
+        </ul>
+      </div>
+      <div class="role-card reveal delay-4">
+        <div class="role-icon">🏃</div>
+        <div class="role-name">Area Atleta</div>
+        <ul class="role-perms">
+          <li>Calendario personale</li>
+          <li>Presenze e convocazioni</li>
+          <li>Bacheca e documenti</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -989,7 +1071,7 @@
       <div>
         <div class="reveal">
           <div class="section-label">Moduli</div>
-          <h2 class="section-title">Una piattaforma,<br><span>13 moduli</span></h2>
+          <h2 class="section-title">Una piattaforma,<br><span>17 moduli</span></h2>
           <p class="section-desc" style="margin-bottom:2rem;">Tutto integrato in un'unica dashboard accessibile da browser, senza installazioni.</p>
         </div>
         <div class="module-list">
@@ -1042,11 +1124,29 @@
           <div class="module-item reveal delay-2">
             <span class="module-num">12</span>
             <span class="module-name">Gestione Materiale</span>
-            <span class="module-tag tag-new">New</span>
           </div>
           <div class="module-item reveal delay-3">
             <span class="module-num">13</span>
             <span class="module-name">Log Accessi Utenti</span>
+          </div>
+          <div class="module-item reveal delay-3">
+            <span class="module-num">14</span>
+            <span class="module-name">Gestione Convocazioni</span>
+            <span class="module-tag tag-new">New</span>
+          </div>
+          <div class="module-item reveal delay-4">
+            <span class="module-num">15</span>
+            <span class="module-name">Monitoraggio Pagamenti</span>
+            <span class="module-tag tag-new">New</span>
+          </div>
+          <div class="module-item reveal delay-4">
+            <span class="module-num">16</span>
+            <span class="module-name">Area Atleta</span>
+            <span class="module-tag tag-new">New</span>
+          </div>
+          <div class="module-item reveal delay-4">
+            <span class="module-num">17</span>
+            <span class="module-name">Dashboard Direzione</span>
             <span class="module-tag tag-new">New</span>
           </div>
         </div>
@@ -1109,7 +1209,7 @@
       <!-- Home -->
       <div class="gallery-card reveal" data-lb="0" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/home.png" alt="Home Riepilogo"
+          <img loading="lazy" decoding="async" src="screenshots/home.png" alt="Home Riepilogo"
                onerror="this.src='screenshots/Home.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🏠</span><span class="gallery-placeholder-text">Home</span></div>
           <span class="gallery-badge">Home</span>
@@ -1123,7 +1223,7 @@
       <!-- Formazione -->
       <div class="gallery-card reveal delay-1" data-lb="1" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/formazione.png" alt="Formazione Tattica"
+          <img loading="lazy" decoding="async" src="screenshots/formazione.png" alt="Formazione Tattica"
                onerror="this.src='screenshots/Formazione.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">⚽</span><span class="gallery-placeholder-text">Formazione</span></div>
           <span class="gallery-badge">Formazione</span>
@@ -1137,7 +1237,7 @@
       <!-- Calendario -->
       <div class="gallery-card reveal delay-2" data-lb="2" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/calendario.png" alt="Calendario"
+          <img loading="lazy" decoding="async" src="screenshots/calendario.png" alt="Calendario"
                onerror="this.src='screenshots/Calendario.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📅</span><span class="gallery-placeholder-text">Calendario</span></div>
           <span class="gallery-badge">Calendario</span>
@@ -1151,7 +1251,7 @@
       <!-- Squadra -->
       <div class="gallery-card reveal" data-lb="3" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/squadra.png" alt="Gestione Squadra"
+          <img loading="lazy" decoding="async" src="screenshots/squadra.png" alt="Gestione Squadra"
                onerror="this.src='screenshots/Squadra.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">👥</span><span class="gallery-placeholder-text">Squadra</span></div>
           <span class="gallery-badge">Squadra</span>
@@ -1165,7 +1265,7 @@
       <!-- Risultati -->
       <div class="gallery-card reveal delay-1" data-lb="4" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/risultati.png" alt="Risultati Partite"
+          <img loading="lazy" decoding="async" src="screenshots/risultati.png" alt="Risultati Partite"
                onerror="this.src='screenshots/Risultati.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🏆</span><span class="gallery-placeholder-text">Risultati</span></div>
           <span class="gallery-badge">Risultati</span>
@@ -1179,7 +1279,7 @@
       <!-- Valutazioni -->
       <div class="gallery-card reveal delay-2" data-lb="5" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/valutazioni.png" alt="Valutazioni"
+          <img loading="lazy" decoding="async" src="screenshots/valutazioni.png" alt="Valutazioni"
                onerror="this.src='screenshots/Valutazioni.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📋</span><span class="gallery-placeholder-text">Valutazioni</span></div>
           <span class="gallery-badge">Valutazioni</span>
@@ -1193,7 +1293,7 @@
       <!-- Presenze -->
       <div class="gallery-card reveal" data-lb="6" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/presenze.png" alt="Report Presenze"
+          <img loading="lazy" decoding="async" src="screenshots/presenze.png" alt="Report Presenze"
                onerror="this.src='screenshots/Presenze.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">✅</span><span class="gallery-placeholder-text">Presenze</span></div>
           <span class="gallery-badge">Presenze</span>
@@ -1207,7 +1307,7 @@
       <!-- Hall of Fame -->
       <div class="gallery-card reveal delay-1" data-lb="7" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/halloffame.png" alt="Hall of Fame"
+          <img loading="lazy" decoding="async" src="screenshots/halloffame.png" alt="Hall of Fame"
                onerror="this.src='screenshots/HallofFame.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🌟</span><span class="gallery-placeholder-text">Hall of Fame</span></div>
           <span class="gallery-badge">Hall of Fame</span>
@@ -1221,7 +1321,7 @@
       <!-- GPS -->
       <div class="gallery-card reveal delay-2" data-lb="8" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/gps.png" alt="GPS Performance"
+          <img loading="lazy" decoding="async" src="screenshots/gps.png" alt="GPS Performance"
                onerror="this.src='screenshots/GPS.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📊</span><span class="gallery-placeholder-text">GPS</span></div>
           <span class="gallery-badge">GPS</span>
@@ -1235,7 +1335,7 @@
       <!-- Analisi -->
       <div class="gallery-card reveal" data-lb="9" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/analisi.png" alt="Analisi Atleta"
+          <img loading="lazy" decoding="async" src="screenshots/analisi.png" alt="Analisi Atleta"
                onerror="this.src='screenshots/Analisi.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🔍</span><span class="gallery-placeholder-text">Analisi</span></div>
           <span class="gallery-badge">Analisi</span>
@@ -1249,7 +1349,7 @@
       <!-- Cal. Presenze -->
       <div class="gallery-card reveal delay-1" data-lb="10" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/cal-presenze.png" alt="Calendario Presenze"
+          <img loading="lazy" decoding="async" src="screenshots/cal-presenze.png" alt="Calendario Presenze"
                onerror="this.src='screenshots/CalPresenze.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📆</span><span class="gallery-placeholder-text">Cal. Presenze</span></div>
           <span class="gallery-badge">Cal. ↗</span>
@@ -1263,7 +1363,7 @@
       <!-- Materiale -->
       <div class="gallery-card reveal delay-2" data-lb="11" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/materiale.png" alt="Gestione Materiale"
+          <img loading="lazy" decoding="async" src="screenshots/materiale.png" alt="Gestione Materiale"
                onerror="this.src='screenshots/Materiale.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📦</span><span class="gallery-placeholder-text">Materiale</span></div>
           <span class="gallery-badge">Materiale</span>
@@ -1277,7 +1377,7 @@
       <!-- Accessi -->
       <div class="gallery-card reveal" data-lb="12" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/accessi.png" alt="Log Accessi"
+          <img loading="lazy" decoding="async" src="screenshots/accessi.png" alt="Log Accessi"
                onerror="this.src='screenshots/Accessi.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'};">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🔐</span><span class="gallery-placeholder-text">Accessi</span></div>
           <span class="gallery-badge">Accessi</span>
@@ -1291,7 +1391,7 @@
       <!-- Convocazioni -->
       <div class="gallery-card reveal" data-lb="13" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/convocazioni.png" alt="Gestione Convocazioni"
+          <img loading="lazy" decoding="async" src="screenshots/convocazioni.png" alt="Gestione Convocazioni"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">📋</span><span class="gallery-placeholder-text">Convocazioni</span></div>
           <span class="gallery-badge">Convocazioni</span>
@@ -1305,7 +1405,7 @@
       <!-- Pagamenti -->
       <div class="gallery-card reveal delay-1" data-lb="14" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/pagamenti.png" alt="Monitoraggio Pagamenti"
+          <img loading="lazy" decoding="async" src="screenshots/pagamenti.png" alt="Monitoraggio Pagamenti"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">💰</span><span class="gallery-placeholder-text">Pagamenti</span></div>
           <span class="gallery-badge">Pagamenti</span>
@@ -1319,7 +1419,7 @@
       <!-- Area Atleta -->
       <div class="gallery-card reveal delay-2" data-lb="15" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/area-atleta.png" alt="Area Atleta"
+          <img loading="lazy" decoding="async" src="screenshots/area-atleta.png" alt="Area Atleta"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🏃</span><span class="gallery-placeholder-text">Area Atleta</span></div>
           <span class="gallery-badge">Area Atleta</span>
@@ -1333,7 +1433,7 @@
       <!-- Dashboard Direzione -->
       <div class="gallery-card reveal" data-lb="16" onclick="lbOpen(this)" style="cursor:pointer;">
         <div class="gallery-img-wrap">
-          <img src="screenshots/direzione.png" alt="Dashboard Direzione"
+          <img loading="lazy" decoding="async" src="screenshots/direzione.png" alt="Dashboard Direzione"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
           <div class="gallery-placeholder" style="display:none;"><span class="gallery-placeholder-icon">🏢</span><span class="gallery-placeholder-text">Direzione</span></div>
           <span class="gallery-badge">Direzione</span>
@@ -1440,7 +1540,7 @@
           <span class="contact-ico">🌐</span>
           <div>
             <div class="contact-item-label">Demo Live</div>
-            <a href="https://app-allenamento-r1.vercel.app" target="_blank" rel="noopener" rel="noopener" target="_blank" class="contact-item-val">app-allenamento-r1.vercel.app</a>
+            <a href="https://app-allenamento-r1.vercel.app" target="_blank" rel="noopener" class="contact-item-val">app-allenamento-r1.vercel.app</a>
           </div>
         </div>
       </div>
@@ -1450,15 +1550,15 @@
         <form id="contact-form">
           <div class="form-group">
             <label class="form-label">Nome e Cognome *</label>
-            <input type="text" class="form-input" placeholder="Mario Rossi" required>
+            <input type="text" name="nome" class="form-input" placeholder="Mario Rossi" required>
           </div>
           <div class="form-group">
             <label class="form-label">Email *</label>
-            <input type="email" class="form-input" placeholder="info.mondo2026@gmail.com" required>
+            <input type="email" name="email" class="form-input" placeholder="latua@email.it" required>
           </div>
           <div class="form-group">
             <label class="form-label">Tipo di squadra</label>
-            <select class="form-select">
+            <select name="squadra" class="form-select">
               <option value="">Seleziona...</option>
               <option>Calcio</option>
               <option>Basket</option>
@@ -1469,9 +1569,9 @@
           </div>
           <div class="form-group">
             <label class="form-label">Messaggio</label>
-            <textarea class="form-textarea" placeholder="Descrivi le tue esigenze..."></textarea>
+            <textarea name="messaggio" class="form-textarea" placeholder="Descrivi le tue esigenze..."></textarea>
           </div>
-          <button type="submit" class="form-submit">Invia Richiesta →</button>
+          <button type="submit" class="form-submit" id="form-btn">Invia Richiesta →</button>
         </form>
         <div id="form-success">✅ Messaggio inviato! Ti risponderemo entro 24 ore.</div>
       </div>
@@ -1492,11 +1592,50 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Form submit
+  // Form submit — invio reale via FormSubmit, fallback mailto
   document.getElementById('contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    this.style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
+    var form = this;
+    var btn = document.getElementById('form-btn');
+    var nome = form.nome.value, email = form.email.value,
+        squadra = form.squadra.value, msg = form.messaggio.value;
+    btn.disabled = true;
+    btn.textContent = 'Invio in corso…';
+
+    fetch('https://formsubmit.co/ajax/info.mondo2026@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: 'Richiesta info Sport Monitoring da ' + nome,
+        Nome: nome, Email: email, Squadra: squadra || '-', Messaggio: msg || '-'
+      })
+    }).then(function(r) {
+      if (!r.ok) throw new Error('http ' + r.status);
+      form.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }).catch(function() {
+      // fallback: apre il client email dell'utente
+      var body = 'Nome: ' + nome + '%0AEmail: ' + email + '%0ASquadra: ' + squadra + '%0A%0A' + encodeURIComponent(msg);
+      window.location.href = 'mailto:info.mondo2026@gmail.com?subject=' +
+        encodeURIComponent('Richiesta info Sport Monitoring') + '&body=' + body;
+      btn.disabled = false;
+      btn.textContent = 'Invia Richiesta →';
+    });
+  });
+
+  // Menu mobile
+  function navToggle() {
+    var links = document.querySelector('.nav-links');
+    var burger = document.getElementById('navBurger');
+    var open = links.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+    burger.textContent = open ? '✕' : '☰';
+  }
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      var links = document.querySelector('.nav-links');
+      if (links.classList.contains('open')) navToggle();
+    });
   });
 
   // Nav active on scroll
@@ -1559,12 +1698,14 @@ var HC = {
     this.slides.forEach(function(s, i) {
       var img = document.createElement('img');
       img.src = s.src; img.alt = s.label;
+      if (i > 0) img.loading = 'lazy';
+      img.decoding = 'async';
       if (i === 0) img.classList.add('hc-on');
       main.insertBefore(img, overlay);
 
       var th = document.createElement('div');
       th.className = 'hc-thumb' + (i === 0 ? ' hc-on' : '');
-      th.innerHTML = '<img src="' + s.src + '" alt="' + s.label + '">';
+      th.innerHTML = '<img loading="lazy" decoding="async" src="' + s.src + '" alt="' + s.label + '">';
       th.dataset.i = i;
       th.addEventListener('click', function(e) { e.stopPropagation(); HC.go(+this.dataset.i); });
       thumbsEl.appendChild(th);
