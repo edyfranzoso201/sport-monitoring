@@ -1547,7 +1547,12 @@
 
       <div class="contact-form reveal delay-2">
         <div class="form-title">Richiedi Informazioni</div>
-        <form id="contact-form">
+        <form id="contact-form" action="https://formsubmit.co/info.mondo2026@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Richiesta info Sport Monitoring">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://sport-monitoring.vercel.app/?sent=1#contatti">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <div class="form-group">
             <label class="form-label">Nome e Cognome *</label>
             <input type="text" name="nome" class="form-input" placeholder="Mario Rossi" required>
@@ -1592,36 +1597,17 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Form submit — invio reale via FormSubmit, fallback mailto
-  document.getElementById('contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    var form = this;
+  // Form contatti — POST diretto a FormSubmit (niente fetch: evita blocchi CORS).
+  // Al ritorno da FormSubmit (?sent=1) mostriamo la conferma al posto del form.
+  document.getElementById('contact-form').addEventListener('submit', function() {
     var btn = document.getElementById('form-btn');
-    var nome = form.nome.value, email = form.email.value,
-        squadra = form.squadra.value, msg = form.messaggio.value;
     btn.disabled = true;
     btn.textContent = 'Invio in corso…';
-
-    fetch('https://formsubmit.co/ajax/info.mondo2026@gmail.com', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        _subject: 'Richiesta info Sport Monitoring da ' + nome,
-        Nome: nome, Email: email, Squadra: squadra || '-', Messaggio: msg || '-'
-      })
-    }).then(function(r) {
-      if (!r.ok) throw new Error('http ' + r.status);
-      form.style.display = 'none';
-      document.getElementById('form-success').style.display = 'block';
-    }).catch(function() {
-      // fallback: apre il client email dell'utente
-      var body = 'Nome: ' + nome + '%0AEmail: ' + email + '%0ASquadra: ' + squadra + '%0A%0A' + encodeURIComponent(msg);
-      window.location.href = 'mailto:info.mondo2026@gmail.com?subject=' +
-        encodeURIComponent('Richiesta info Sport Monitoring') + '&body=' + body;
-      btn.disabled = false;
-      btn.textContent = 'Invia Richiesta →';
-    });
   });
+  if (new URLSearchParams(window.location.search).get('sent') === '1') {
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
 
   // Menu mobile
   function navToggle() {
