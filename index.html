@@ -1856,7 +1856,9 @@ document.addEventListener('DOMContentLoaded', function() { HC.init(); });
   var demoError   = document.getElementById('demo-error');
 
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  var PHONE_RE = /^(\+39)?\s?3\d{8,9}$/;
+  // Stessa regex usata lato server (api/data.js, action=demo-signup) dopo la normalizzazione
+  // del numero — nessuno spazio ammesso qui perché il telefono viene già ripulito prima del test.
+  var PHONE_RE = /^(\+39)?3\d{8,9}$/;
 
   function showError(msg) {
     demoError.textContent = msg;
@@ -1878,7 +1880,10 @@ document.addEventListener('DOMContentLoaded', function() { HC.init(); });
     var societyName = document.getElementById('demo-society').value.trim();
     var refName      = document.getElementById('demo-ref').value.trim();
     var email        = document.getElementById('demo-email').value.trim();
-    var phone        = document.getElementById('demo-phone').value.trim();
+    // Normalizza come fa il server (rimuove spazi/trattini/parentesi tra i gruppi di cifre)
+    // prima di validare, così un numero scritto "333 123 4567" non viene rifiutato qui
+    // per poi essere accettato dal server, o viceversa.
+    var phone = document.getElementById('demo-phone').value.trim().replace(/[^\d+]/g, '');
 
     if (!societyName) { showError('Inserisci il nome della società/squadra.'); return; }
     if (!refName)      { showError('Inserisci il nome del referente.'); return; }
