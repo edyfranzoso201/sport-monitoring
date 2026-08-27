@@ -576,6 +576,40 @@
     color: var(--accent2); font-weight: 600;
   }
 
+  /* ── DEMO GRATIS 3 MESI ───────────────────── */
+  .demo-trial {
+    padding: 90px 0;
+    background: linear-gradient(180deg, transparent, rgba(0,212,255,0.05), transparent);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .demo-trial-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .demo-trial-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3);
+    color: var(--accent2); padding: 6px 16px; border-radius: 100px;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 1.4rem;
+  }
+  .demo-trial-list { list-style: none; margin-top: 1.8rem; display: flex; flex-direction: column; gap: 10px; }
+  .demo-trial-list li {
+    font-size: 0.92rem; color: var(--text); display: flex; align-items: center; gap: 10px;
+  }
+  .demo-trial-list li::before { content: '✓'; color: var(--accent2); font-weight: 900; }
+  #demo-success {
+    display: none; text-align: center; padding: 20px;
+    color: var(--accent2); font-weight: 600;
+  }
+  #demo-error {
+    display: none; text-align: center; padding: 14px;
+    color: #ff6b6b; font-weight: 600;
+  }
+  @media (max-width: 900px) {
+    .demo-trial-inner { grid-template-columns: 1fr; }
+  }
+
   /* ── FOOTER ───────────────────────────────── */
   footer {
     border-top: 1px solid var(--border);
@@ -830,6 +864,7 @@
 <nav>
   <div class="nav-logo">Sport<span>Monitoring</span></div>
   <div class="nav-links">
+    <a href="#prova-gratis">Prova Gratis</a>
     <a href="#funzionalita">Funzionalità</a>
     <a href="#gallery">Gallery</a>
     <a href="#utenti">Utenti</a>
@@ -947,6 +982,53 @@
     </div>
   </div>
 </div>
+
+<!-- DEMO GRATIS 3 MESI -->
+<section class="demo-trial" id="prova-gratis">
+  <div class="container">
+    <div class="demo-trial-inner">
+      <div class="reveal">
+        <div class="demo-trial-badge">🎁 Offerta di lancio</div>
+        <h2 class="section-title">Prova gratis<br><span>per 3 mesi</span></h2>
+        <p class="section-desc">
+          Attiva la demo completa per la tua società senza impegno. Accesso a tutti i moduli,
+          nessuna carta di credito richiesta.
+        </p>
+        <ul class="demo-trial-list">
+          <li>Accesso completo a tutti i 17 moduli</li>
+          <li>Nessun vincolo, nessuna carta richiesta</li>
+          <li>Assistenza inclusa durante la prova</li>
+        </ul>
+      </div>
+
+      <div class="contact-form reveal delay-2">
+        <div class="form-title">Attiva la prova gratuita</div>
+        <form id="demo-form">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+          <div class="form-group">
+            <label class="form-label">Nome società/squadra *</label>
+            <input type="text" name="societyName" id="demo-society" class="form-input" placeholder="ASD Sporting Club" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nome referente *</label>
+            <input type="text" name="refName" id="demo-ref" class="form-input" placeholder="Mario Rossi" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input type="email" name="email" id="demo-email" class="form-input" placeholder="latua@email.it" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefono *</label>
+            <input type="tel" name="phone" id="demo-phone" class="form-input" placeholder="3331234567" required>
+          </div>
+          <button type="submit" class="form-submit" id="demo-btn">Attiva Demo Gratuita →</button>
+        </form>
+        <div id="demo-success">✅ Richiesta inviata! Controlla la tua email per confermare la registrazione.</div>
+        <div id="demo-error"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- FEATURES -->
 <section class="features" id="funzionalita">
@@ -1762,6 +1844,74 @@ function hcZoom() {
 }
 
 document.addEventListener('DOMContentLoaded', function() { HC.init(); });
+</script>
+<script>
+// ── Form "Prova gratis 3 mesi" — invio AJAX a demo-signup ─────────
+(function() {
+  var demoForm = document.getElementById('demo-form');
+  if (!demoForm) return;
+
+  var demoBtn     = document.getElementById('demo-btn');
+  var demoSuccess = document.getElementById('demo-success');
+  var demoError   = document.getElementById('demo-error');
+
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  var PHONE_RE = /^(\+39)?\s?3\d{8,9}$/;
+
+  function showError(msg) {
+    demoError.textContent = msg;
+    demoError.style.display = 'block';
+  }
+  function hideError() {
+    demoError.style.display = 'none';
+    demoError.textContent = '';
+  }
+
+  demoForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    hideError();
+
+    // Honeypot: se compilato, probabile bot — esce silenziosamente.
+    var honey = demoForm.querySelector('input[name="_honey"]');
+    if (honey && honey.value) return;
+
+    var societyName = document.getElementById('demo-society').value.trim();
+    var refName      = document.getElementById('demo-ref').value.trim();
+    var email        = document.getElementById('demo-email').value.trim();
+    var phone        = document.getElementById('demo-phone').value.trim();
+
+    if (!societyName) { showError('Inserisci il nome della società/squadra.'); return; }
+    if (!refName)      { showError('Inserisci il nome del referente.'); return; }
+    if (!EMAIL_RE.test(email)) { showError('Inserisci un indirizzo email valido.'); return; }
+    if (!PHONE_RE.test(phone)) { showError('Inserisci un numero di telefono italiano valido (es. 3331234567).'); return; }
+
+    demoBtn.disabled = true;
+    demoBtn.textContent = 'Invio in corso…';
+
+    fetch('https://app-allenamento-r1.vercel.app/api/data?action=demo-signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ societyName: societyName, refName: refName, email: email, phone: phone })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(d) {
+      if (d && d.success) {
+        demoForm.style.display = 'none';
+        demoSuccess.style.display = 'block';
+      } else {
+        var msg = (d && d.message) ? d.message : 'Richiesta non riuscita. Riprova più tardi.';
+        showError(msg);
+        demoBtn.disabled = false;
+        demoBtn.textContent = 'Attiva Demo Gratuita →';
+      }
+    })
+    .catch(function() {
+      showError('Errore di rete, riprova.');
+      demoBtn.disabled = false;
+      demoBtn.textContent = 'Attiva Demo Gratuita →';
+    });
+  });
+})();
 </script>
 </body>
 </html>
